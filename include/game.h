@@ -4,6 +4,7 @@
 // forward declarations in the global namespace.
 struct SDL_Window;
 struct SDL_Renderer;
+struct _TTF_Font;
 
 namespace space_invaders
 {
@@ -38,10 +39,14 @@ namespace space_invaders
 
           SDL_Renderer* getRenderer()       { return mRenderer; }
     const SDL_Renderer* getRenderer() const { return mRenderer; }
+
+          _TTF_Font* getFont()        { return mFont; }
+    const _TTF_Font* getFont() const  { return mFont; }
   private:
     State         mState;
     SDL_Window*   mWindow;
     SDL_Renderer* mRenderer;
+    _TTF_Font*    mFont;
   };
 }
 

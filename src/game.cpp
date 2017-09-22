@@ -6,7 +6,7 @@
 
 using namespace space_invaders;
 
-Game::Game(int width, int height) : mState(State::NOT_INITED), mRenderer(nullptr), mWindow(nullptr)
+Game::Game(int width, int height) : mState(State::NOT_INITED), mRenderer(nullptr), mWindow(nullptr), mFont(nullptr)
 {
   // initialize all SDL2 framework systems.
   if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
@@ -34,12 +34,20 @@ Game::Game(int width, int height) : mState(State::NOT_INITED), mRenderer(nullptr
     return;
   }
 
+  // initialize a font for the application.
+  mFont = TTF_OpenFont("C:/Windows/Fonts/arial.ttf", 28);
+  if (mFont == nullptr) {
+    std::cerr << "Unable to load font: " << TTF_GetError() << std::endl;
+    return;
+  }
+
   // define the game as ready-to-go!
   mState = State::INITED;
 }
 
 Game::~Game()
 {
+  TTF_CloseFont(mFont);
   SDL_DestroyRenderer(mRenderer);
   SDL_DestroyWindow(mWindow);
   TTF_Quit();
