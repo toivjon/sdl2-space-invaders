@@ -1,10 +1,16 @@
 #ifndef SPACE_INVADERS_GAME_H
 #define SPACE_INVADERS_GAME_H
 
+// forward declarations in the global namespace.
+struct SDL_Window;
+struct SDL_Renderer;
+
 namespace space_invaders
 {
   class Game final
   {
+  public:
+    enum class State { NOT_INITED, INITED, RUNNING, STOPPED };
   public:
     // ===============================
     // = forbidden default functions =
@@ -26,6 +32,10 @@ namespace space_invaders
     ~Game();
 
     int run();
+  private:
+    State         mState;
+    SDL_Window*   mWindow;
+    SDL_Renderer* mRenderer;
   };
 }
 
