@@ -32,6 +32,12 @@ namespace space_invaders
     ~Game();
 
     int run();
+
+          SDL_Window* getWindow()       { return mWindow; }
+    const SDL_Window* getWindow() const { return mWindow; }
+
+          SDL_Renderer* getRenderer()       { return mRenderer; }
+    const SDL_Renderer* getRenderer() const { return mRenderer; }
   private:
     State         mState;
     SDL_Window*   mWindow;
