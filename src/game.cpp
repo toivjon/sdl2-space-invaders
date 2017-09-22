@@ -48,6 +48,12 @@ Game::~Game()
 
 int Game::run()
 {
+  // return with an error code if we do not have a good game state.
+  if (mState != State::INITED && mState != State::STOPPED) {
+    std::cerr << "Uanble to run the game as the game state is " << (int)mState << std::endl;
+    return -1;
+  }
+
   SDL_Event event;
   mState = State::RUNNING;
   while (mState == State::RUNNING) {
