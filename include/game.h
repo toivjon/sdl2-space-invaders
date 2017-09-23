@@ -47,6 +47,8 @@ namespace space_invaders
     SDL_Window*   mWindow;
     SDL_Renderer* mRenderer;
     _TTF_Font*    mFont;
+    unsigned long mPreviousTick;
+    unsigned long mDeltaAccumulator;
   };
 }
 

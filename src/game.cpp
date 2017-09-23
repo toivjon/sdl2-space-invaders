@@ -1,5 +1,6 @@
 #include "game.h"
 
+#include <chrono>
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
@@ -7,7 +8,13 @@
 
 using namespace space_invaders;
 
-Game::Game(int width, int height) : mState(State::NOT_INITED), mRenderer(nullptr), mWindow(nullptr), mFont(nullptr)
+inline unsigned long currentMillis()
+{
+  using namespace std::chrono;
+  return (unsigned long)duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+}
+
+Game::Game(int width, int height) : mState(State::NOT_INITED), mRenderer(nullptr), mWindow(nullptr), mFont(nullptr), mPreviousTick(0), mDeltaAccumulator(0)
 {
   // initialize all SDL2 framework systems.
   if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
@@ -72,6 +79,7 @@ int Game::run()
 
   SDL_Event event;
   mState = State::RUNNING;
+  mPreviousTick = currentMillis();
   while (mState == State::RUNNING) {
     // poll and handle events from the SDL.
     while (SDL_PollEvent(&event) != 0) {
@@ -80,6 +88,19 @@ int Game::run()
         mState = State::STOPPED;
         break;
       }
+    }
+
+    // calculate the delta between the current and previous tick millis.
+    auto millis = currentMillis();
+    auto dt = (millis - mPreviousTick);
+    mPreviousTick = millis;
+
+    // update game logics with a fixed framerate.
+    mDeltaAccumulator += dt;
+    static const auto FPS = (1000l / 60l);
+    if (mDeltaAccumulator >= FPS) {
+      // ... TODO update the logic of the scene objects.
+      mDeltaAccumulator -= FPS;
     }
 
     // clear the rendering context with the black color.
