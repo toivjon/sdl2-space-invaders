@@ -14,7 +14,7 @@ inline unsigned long currentMillis()
   return (unsigned long)duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 }
 
-Game::Game(int width, int height) : mState(State::NOT_INITED), mRenderer(nullptr), mWindow(nullptr), mFont(nullptr), mPreviousTick(0), mDeltaAccumulator(0)
+Game::Game(int width, int height) : mState(State::NOT_INITED), mRenderer(nullptr), mWindow(nullptr), mFont(nullptr), mPreviousTick(0), mDeltaAccumulator(0), mScene(nullptr)
 {
   // initialize all SDL2 framework systems.
   if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
@@ -77,6 +77,8 @@ int Game::run()
     return -1;
   }
 
+  // ... TODO set the initial scene
+
   SDL_Event event;
   mState = State::RUNNING;
   mPreviousTick = currentMillis();
@@ -99,7 +101,7 @@ int Game::run()
     mDeltaAccumulator += dt;
     static const auto FPS = (1000l / 60l);
     if (mDeltaAccumulator >= FPS) {
-      // ... TODO update the logic of the scene objects.
+      mScene->update(FPS);
       mDeltaAccumulator -= FPS;
     }
 
@@ -107,11 +109,26 @@ int Game::run()
     SDL_SetRenderDrawColor(mRenderer, 0x00, 0x00, 0x00, 0xff);
     SDL_RenderClear(mRenderer);
 
-    // ... TODO render the scene contents into the back buffer
+    // render the scene on the back buffer.
+    mScene->render(*mRenderer);
 
     // present the rendered buffer.
     SDL_RenderPresent(mRenderer);
   }
 
   return 0;
+}
+
+void Game::setScene(ScenePtr scene)
+{
+  if (scene) {
+    // exit the previous scene (if any).
+    if (mScene) {
+      mScene->exit();
+    }
+
+    // apply and enter the new scene.
+    mScene = scene;
+    mScene->enter();
+  }
 }

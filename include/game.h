@@ -17,6 +17,8 @@
 #ifndef SPACE_INVADERS_GAME_H
 #define SPACE_INVADERS_GAME_H
 
+#include "scene.h"
+
 // forward declarations in the global namespace.
 struct SDL_Window;
 struct SDL_Renderer;
@@ -49,6 +51,8 @@ namespace space_invaders
     ~Game();
 
     int run();
+    
+    void setScene(ScenePtr scene);
 
           SDL_Window* getWindow()       { return mWindow; }
     const SDL_Window* getWindow() const { return mWindow; }
@@ -58,6 +62,9 @@ namespace space_invaders
 
           _TTF_Font* getFont()        { return mFont; }
     const _TTF_Font* getFont() const  { return mFont; }
+
+          ScenePtr getScene()       { return mScene;  }
+    const ScenePtr getScene() const { return mScene;  }
   private:
     State         mState;
     SDL_Window*   mWindow;
@@ -65,6 +72,7 @@ namespace space_invaders
     _TTF_Font*    mFont;
     unsigned long mPreviousTick;
     unsigned long mDeltaAccumulator;
+    ScenePtr      mScene;
   };
 }
 
