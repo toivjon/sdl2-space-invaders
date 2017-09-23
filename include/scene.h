@@ -1,3 +1,10 @@
+/*! An abstraction of all scenes within the Space Invaders application.
+ * 
+ * Our implementation of the Space Invaders contains three different scenes
+ * where each scene has typical game scene features, which are called when
+ * the scene is either active or is being exited or entered. This abstraction
+ * ensures that every scene will implement at least the required functions.
+ */
 #ifndef SPACE_INVADERS_SCENE_H
 #define SPACE_INVADERS_SCENE_H
 
