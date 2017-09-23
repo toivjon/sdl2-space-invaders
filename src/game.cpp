@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <SDL.h>
+#include <SDL_image.h>
 #include <SDL_ttf.h>
 
 using namespace space_invaders;
@@ -11,6 +12,12 @@ Game::Game(int width, int height) : mState(State::NOT_INITED), mRenderer(nullptr
   // initialize all SDL2 framework systems.
   if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
     std::cerr << "Unable to initialize SDL: " << SDL_GetError() << std::endl;
+    return;
+  }
+
+  // initialize image system for image management.
+  if (IMG_Init(IMG_INIT_PNG) == -1) {
+    std::cerr << "Unable to initialize IMG: " << IMG_GetError() << std::endl;
     return;
   }
 
@@ -51,6 +58,7 @@ Game::~Game()
   SDL_DestroyRenderer(mRenderer);
   SDL_DestroyWindow(mWindow);
   TTF_Quit();
+  IMG_Quit();
   SDL_Quit();
 }
 
