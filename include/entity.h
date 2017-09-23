@@ -1,0 +1,4 @@
+#ifndef SPACE_INVADERS_ENTITY_H
+#define SPACE_INVADERS_ENTITY_H
+
+#endif

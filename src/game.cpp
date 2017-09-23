@@ -1,4 +1,5 @@
 #include "game.h"
+#include "welcome_scene.h"
 
 #include <chrono>
 #include <iostream>
@@ -77,7 +78,8 @@ int Game::run()
     return -1;
   }
 
-  // ... TODO set the initial scene
+  // set the welcoming scene as the initial scene.
+  this->setScene(std::make_shared<WelcomeScene>(*this));
 
   SDL_Event event;
   mState = State::RUNNING;
