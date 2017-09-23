@@ -1,3 +1,19 @@
+/*! A simple implementation of the legendary Space Invaders game for the SDL2.
+ *
+ * This game is a SDL2 version of the legendary Space Invaders game, which was
+ * released in 1978 by Taito Corporation. This version uses 2D drawing context
+ * from the SDL2 framework to draw items on the screen. Game also uses three
+ * scenes, which also act as the states of the game. Scenes are following:
+ *
+ * 1. Welcome
+ * 2. Player start
+ * 3. Ingame
+ * 
+ * Welcome scene contains the introduction and control descriptions about how
+ * to play the game. Player start contains a description that a particular
+ * player should get ready as the game is going to start soon, while the ingame
+ * scene contains the actual gameplay where aliens try to invade earth.
+ */
 #ifndef SPACE_INVADERS_GAME_H
 #define SPACE_INVADERS_GAME_H
 
