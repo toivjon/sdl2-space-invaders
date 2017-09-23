@@ -13,13 +13,22 @@ namespace space_invaders
   class Scene
   {
   public:
+    // ===============================
+    // = forbidden default functions =
+    // ===============================
+
     Scene() = delete;
     Scene(const Scene&) = delete;
     Scene(Scene&&) = delete;
     Scene& operator=(const Scene&) = delete;
     Scene& operator=(Scene&&) = delete;
-  public:
+    
+    // =====================
+    // = allowed functions =
+    // =====================
+
     Scene(Game& game) : mGame(game) {}
+    virtual ~Scene() = default;
 
     virtual void enter() = 0;
     virtual void exit() = 0;
