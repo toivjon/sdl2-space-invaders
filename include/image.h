@@ -27,10 +27,15 @@ namespace space_invaders
     static std::shared_ptr<Image> fromFile(SDL_Renderer* renderer, const std::string& filename);
     static std::shared_ptr<Image> fromText(SDL_Renderer* renderer, const std::string& text, SDL_Color& color, _TTF_Font* font);
 
-    SDL_Texture* getTexture() { return mTexture; }
+          SDL_Texture* getTexture()       { return mTexture; }
     const SDL_Texture* getTexture() const { return mTexture; }
+
+    int getWidth()  const { return mWidth;  }
+    int getHeight() const { return mHeight; }
   private:
-    SDL_Texture* mTexture;
+    SDL_Texture*  mTexture;
+    int           mWidth;
+    int           mHeight;
   };
   typedef std::shared_ptr<Image> ImagePtr;
 }

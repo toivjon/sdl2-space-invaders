@@ -7,9 +7,10 @@
 
 using namespace space_invaders;
 
-Image::Image(SDL_Texture* texture) : mTexture(texture)
+Image::Image(SDL_Texture* texture) : mTexture(texture), mWidth(0), mHeight(0)
 {
-  // ...
+  // query for the width and height of the provided image texture.
+  SDL_QueryTexture(texture, nullptr, nullptr, &mWidth, &mHeight);
 }
 
 Image::~Image()
