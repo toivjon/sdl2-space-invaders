@@ -15,7 +15,14 @@ inline unsigned long currentMillis()
   return (unsigned long)duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
 }
 
-Game::Game(int width, int height) : mState(State::NOT_INITED), mRenderer(nullptr), mWindow(nullptr), mFont(nullptr), mPreviousTick(0), mDeltaAccumulator(0), mScene(nullptr)
+Game::Game(int width, int height) : mState(State::NOT_INITED),
+  mRenderer(nullptr),
+  mWindow(nullptr),
+  mFont(nullptr),
+  mPreviousTick(0),
+  mDeltaAccumulator(0),
+  mScene(nullptr),
+  mSpriteSheet(nullptr)
 {
   // initialize all SDL2 framework systems.
   if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
@@ -56,12 +63,30 @@ Game::Game(int width, int height) : mState(State::NOT_INITED), mRenderer(nullptr
     return;
   }
 
+  // load the sprite sheet image surface from an external image file.
+  auto surface = IMG_Load("spritesheet.png");
+  if (surface == nullptr) {
+    std::cerr << "Unable to load surface spritesheet.png: " << IMG_GetError() << std::endl;
+    return;
+  }
+
+  // create a texture from the loaded image surface.
+  mSpriteSheet = SDL_CreateTextureFromSurface(mRenderer, surface);
+  if (mSpriteSheet == nullptr) {
+    std::cerr << "Unable to load texture spritesheet.png: " << SDL_GetError() << std::endl;
+    return;
+  }
+
+  // release the surface as we don't need it anymore.
+  SDL_FreeSurface(surface);
+
   // define the game as ready-to-go!
   mState = State::INITED;
 }
 
 Game::~Game()
 {
+  SDL_DestroyTexture(mSpriteSheet);
   TTF_CloseFont(mFont);
   SDL_DestroyRenderer(mRenderer);
   SDL_DestroyWindow(mWindow);

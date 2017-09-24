@@ -22,6 +22,7 @@
 // forward declarations in the global namespace.
 struct SDL_Window;
 struct SDL_Renderer;
+struct SDL_Texture;
 struct _TTF_Font;
 
 namespace space_invaders
@@ -65,6 +66,9 @@ namespace space_invaders
 
           ScenePtr getScene()       { return mScene;  }
     const ScenePtr getScene() const { return mScene;  }
+
+          SDL_Texture* getSpriteSheet()       { return mSpriteSheet; }
+    const SDL_Texture* getSpriteSheet() const { return mSpriteSheet; }
   private:
     State         mState;
     SDL_Window*   mWindow;
@@ -73,6 +77,7 @@ namespace space_invaders
     unsigned long mPreviousTick;
     unsigned long mDeltaAccumulator;
     ScenePtr      mScene;
+    SDL_Texture*  mSpriteSheet;
   };
 }
 
