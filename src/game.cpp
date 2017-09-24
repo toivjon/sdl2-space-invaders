@@ -63,22 +63,12 @@ Game::Game(int width, int height) : mState(State::NOT_INITED),
     return;
   }
 
-  // load the sprite sheet image surface from an external image file.
-  auto surface = IMG_Load("spritesheet.png");
-  if (surface == nullptr) {
-    std::cerr << "Unable to load surface spritesheet.png: " << IMG_GetError() << std::endl;
-    return;
-  }
-
-  // create a texture from the loaded image surface.
-  mSpriteSheet = SDL_CreateTextureFromSurface(mRenderer, surface);
+  // load the sprite sheet from the local filesystem.
+  mSpriteSheet = Image::fromFile(mRenderer, "spritesheet.png");
   if (mSpriteSheet == nullptr) {
-    std::cerr << "Unable to load texture spritesheet.png: " << SDL_GetError() << std::endl;
+    std::cerr << "Unable to load sprite sheet from local filesystem." << std::endl;
     return;
   }
-
-  // release the surface as we don't need it anymore.
-  SDL_FreeSurface(surface);
 
   // define the game as ready-to-go!
   mState = State::INITED;
@@ -86,7 +76,6 @@ Game::Game(int width, int height) : mState(State::NOT_INITED),
 
 Game::~Game()
 {
-  SDL_DestroyTexture(mSpriteSheet);
   TTF_CloseFont(mFont);
   SDL_DestroyRenderer(mRenderer);
   SDL_DestroyWindow(mWindow);

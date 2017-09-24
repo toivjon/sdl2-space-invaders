@@ -18,6 +18,7 @@
 #define SPACE_INVADERS_GAME_H
 
 #include "scene.h"
+#include "image.h"
 
 // forward declarations in the global namespace.
 struct SDL_Window;
@@ -67,8 +68,8 @@ namespace space_invaders
           ScenePtr getScene()       { return mScene;  }
     const ScenePtr getScene() const { return mScene;  }
 
-          SDL_Texture* getSpriteSheet()       { return mSpriteSheet; }
-    const SDL_Texture* getSpriteSheet() const { return mSpriteSheet; }
+          ImagePtr getSpriteSheet()       { return mSpriteSheet; }
+    const ImagePtr getSpriteSheet() const { return mSpriteSheet; }
   private:
     State         mState;
     SDL_Window*   mWindow;
@@ -77,7 +78,7 @@ namespace space_invaders
     unsigned long mPreviousTick;
     unsigned long mDeltaAccumulator;
     ScenePtr      mScene;
-    SDL_Texture*  mSpriteSheet;
+    ImagePtr      mSpriteSheet;
   };
 }
 
