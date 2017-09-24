@@ -38,6 +38,8 @@ namespace space_invaders
 
     void setX(int x) override;
     void setY(int y) override;
+    void setWidth(int width) override;
+    void setHeight(int height) override;
 
     bool collides(CollideableEntity& entity) const;
     bool contains(int x, int y) const;

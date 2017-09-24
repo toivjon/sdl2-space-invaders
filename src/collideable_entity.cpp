@@ -20,16 +20,32 @@ CollideableEntity::~CollideableEntity()
   // ...
 }
 
+void CollideableEntity::setWidth(int width)
+{
+  Entity::setWidth(width);
+  mExtentX = (width / 2);
+  mCenterX = this->getX() + mExtentX;
+}
+
+void CollideableEntity::setHeight(int height)
+{
+  Entity::setHeight(height);
+  mExtentY = (height / 2);
+  mCenterY = this->getY() + mExtentY;
+}
+
 void CollideableEntity::setExtentX(int extentX)
 {
   mExtentX = extentX;
   mCenterX = this->getX() + mExtentX;
+  Entity::setWidth(extentX * 2);
 }
 
 void CollideableEntity::setExtentY(int extentY)
 {
   mExtentY = extentY;
   mCenterY = this->getY() + mExtentY;
+  Entity::setHeight(extentY * 2);
 }
 
 void CollideableEntity::setCenterX(int centerX)

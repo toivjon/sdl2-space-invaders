@@ -8,6 +8,8 @@
 #ifndef SPACE_INVADERS_ENTITY_H
 #define SPACE_INVADERS_ENTITY_H
 
+#include <SDL.h>
+
 namespace space_invaders
 {
   class Game;
@@ -28,18 +30,23 @@ namespace space_invaders
     // = allowed functions =
     // =====================
 
-    Entity(Game& game) : mGame(game), mX(0), mY(0) {}
+    Entity(Game& game) : mGame(game), mRect({0,0,0,0}) {}
     virtual ~Entity() = default;
 
-    int getX() const { return mX; }
-    int getY() const { return mY; }
+    int getX()      const { return mRect.x; }
+    int getY()      const { return mRect.y; }
+    int getWidth()  const { return mRect.w; }
+    int getHeight() const { return mRect.h; }
 
-    virtual void setX(int x) { mX = x; }
-    virtual void setY(int y) { mY = y; }
+    const SDL_Rect& getRect() const { return mRect; }
+
+    virtual void setX(int x)      { mRect.x = x; }
+    virtual void setY(int y)      { mRect.y = y; }
+    virtual void setWidth(int w)  { mRect.w = w; }
+    virtual void setHeight(int h) { mRect.h = h; }
   private:
-    Game& mGame;
-    int   mX;
-    int   mY;
+    Game&    mGame;
+    SDL_Rect mRect;
   };
 }
 
