@@ -9,9 +9,9 @@
 #define SPACE_INVADERS_DRAWABLE_ENTTIY_H
 
 #include "collideable_entity.h"
+#include "image.h"
 
-// forward declarations in the global namespace.
-struct SDL_Renderer;
+#include <SDL.h>
 
 namespace space_invaders
 {
@@ -37,11 +37,21 @@ namespace space_invaders
 
     void render(SDL_Renderer& renderer);
 
+    void setImage(ImagePtr image);
+
     bool isVisible() const { return mVisible; }
+
+          ImagePtr getImage()       { return mImage; }
+    const ImagePtr getImage() const { return mImage; }
+
+          SDL_Rect& getClip()       { return mClip; }
+    const SDL_Rect& getClip() const { return mClip; }
 
     void setVisible(bool visible) { mVisible = visible; }
   private:
-    bool mVisible;
+    bool     mVisible;
+    ImagePtr mImage;
+    SDL_Rect mClip;
   };
 }
 
