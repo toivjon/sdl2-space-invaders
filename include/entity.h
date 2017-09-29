@@ -44,8 +44,9 @@ namespace space_invaders
     virtual void setY(int y)      { mRect.y = y; }
     virtual void setWidth(int w)  { mRect.w = w; }
     virtual void setHeight(int h) { mRect.h = h; }
-  private:
+  protected:
     Game&    mGame;
+  private:
     SDL_Rect mRect;
   };
 }
