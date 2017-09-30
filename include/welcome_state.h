@@ -9,6 +9,7 @@
 #define SPACE_INVADERS_WELCOME_STATE_H
 
 #include "state.h"
+#include "text_entity.h"
 
 namespace space_invaders
 {
@@ -40,6 +41,13 @@ namespace space_invaders
 
     void onKeyUp(SDL_KeyboardEvent& event);
     void onKeyDown(SDL_KeyboardEvent& event);
+  private:
+    TextEntity mPlayText;
+    TextEntity mNameText;
+    TextEntity mSinglePlayerText;
+    TextEntity mMultiPlayerText;
+    TextEntity mControlsText;
+    TextEntity mTableCaptionText;
   };
 }
 
