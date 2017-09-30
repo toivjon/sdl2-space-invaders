@@ -20,7 +20,7 @@ namespace space_invaders
   {
   public:
     State(Game& game) : mGame(game) {}
-    virtual ~State() = 0;
+    virtual ~State() {}
 
     virtual void update(unsigned long dt) = 0;
     virtual void render(SDL_Renderer& renderer) = 0;

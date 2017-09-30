@@ -1,6 +1,7 @@
 #include "scene.h"
 #include "game.h"
 #include "text_entity.h"
+#include "welcome_state.h"
 
 using namespace space_invaders;
 
@@ -13,7 +14,8 @@ inline std::string toScoreString(int score) {
   return result.substr(result.length() - 4, 4);
 }
 
-Scene::Scene(Game& game) : mGame(game), mState(nullptr),
+Scene::Scene(Game& game) : mGame(game),
+  mState(std::make_shared<WelcomeState>(game)),
   mScore1Caption(std::make_shared<TextEntity>(game)),
   mHiScoreCaption(std::make_shared<TextEntity>(game)),
   mScore2Caption(std::make_shared<TextEntity>(game)),
