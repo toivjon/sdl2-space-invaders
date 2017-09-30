@@ -33,6 +33,8 @@ namespace space_invaders
     Entity(Game& game) : mGame(game), mRect({0,0,0,0}) {}
     virtual ~Entity() = default;
 
+    virtual void update(unsigned long dt) {}
+
     int getX()      const { return mRect.x; }
     int getY()      const { return mRect.y; }
     int getWidth()  const { return mRect.w; }
