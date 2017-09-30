@@ -49,12 +49,9 @@ namespace space_invaders
     // =====================
 
     Game(int width, int height);
-
     ~Game();
 
     int run();
-    
-    void setScene(ScenePtr scene);
 
           SDL_Window* getWindow()       { return mWindow; }
     const SDL_Window* getWindow() const { return mWindow; }

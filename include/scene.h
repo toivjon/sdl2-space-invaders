@@ -8,6 +8,8 @@
 #ifndef SPACE_INVADERS_SCENE_H
 #define SPACE_INVADERS_SCENE_H
 
+// #include "text_entity.h"
+
 #include <memory>
 
 // forward declarations in the global namespace.
@@ -16,6 +18,7 @@ struct SDL_KeyboardEvent;
 
 namespace space_invaders
 {
+  class TextEntity;
   class Game;
   class Scene
   {
@@ -34,19 +37,24 @@ namespace space_invaders
     // = allowed functions =
     // =====================
 
-    Scene(Game& game) : mGame(game) {}
-    virtual ~Scene() = default;
+    Scene(Game& game);
+    ~Scene() = default;
 
-    virtual void enter() = 0;
-    virtual void exit() = 0;
+    void update(unsigned long dt);
+    void render(SDL_Renderer& renderer);
 
-    virtual void update(unsigned long dt) = 0;
-    virtual void render(SDL_Renderer& renderer) = 0;
-
-    virtual void onKeyUp(SDL_KeyboardEvent& event) = 0;
-    virtual void onKeyDown(SDL_KeyboardEvent& event) = 0;
+    void onKeyUp(SDL_KeyboardEvent& event);
+    void onKeyDown(SDL_KeyboardEvent& event);
   protected:
     Game& mGame;
+
+    std::shared_ptr<TextEntity> mScore1Caption;
+    std::shared_ptr<TextEntity> mHiScoreCaption;
+    std::shared_ptr<TextEntity> mScore2Caption;
+
+    std::shared_ptr<TextEntity> mScore1Text;
+    std::shared_ptr<TextEntity> mHiScoreText;
+    std::shared_ptr<TextEntity> mScore2Text;
   };
   typedef std::shared_ptr<Scene> ScenePtr;
 }

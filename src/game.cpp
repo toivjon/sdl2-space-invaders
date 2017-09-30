@@ -1,5 +1,4 @@
 #include "game.h"
-#include "welcome_scene.h"
 
 #include <chrono>
 #include <iostream>
@@ -93,7 +92,7 @@ int Game::run()
   }
 
   // set the welcoming scene as the initial scene.
-  this->setScene(std::make_shared<WelcomeScene>(*this));
+  mScene = std::make_shared<Scene>(*this);
 
   SDL_Event event;
   mState = State::RUNNING;
@@ -133,18 +132,4 @@ int Game::run()
   }
 
   return 0;
-}
-
-void Game::setScene(ScenePtr scene)
-{
-  if (scene) {
-    // exit the previous scene (if any).
-    if (mScene) {
-      mScene->exit();
-    }
-
-    // apply and enter the new scene.
-    mScene = scene;
-    mScene->enter();
-  }
 }

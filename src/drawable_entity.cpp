@@ -16,7 +16,7 @@ DrawableEntity::~DrawableEntity()
 
 void DrawableEntity::render(SDL_Renderer& renderer)
 {
-  if (mVisible) {
+  if (mVisible && mImage) {
     SDL_RenderCopy(&renderer, mImage->getTexture(), &mClip, &this->getRect());
   }
 }
