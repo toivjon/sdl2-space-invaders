@@ -90,3 +90,17 @@ void Scene::onKeyDown(SDL_KeyboardEvent& event)
 {
   mState->onKeyDown(event);
 }
+
+void Scene::setState(StatePtr state)
+{
+  // exit from the old state (if defined).
+  if (mState) {
+    mState->onExit();
+  }
+
+  // assign and enter the new state (if not null)
+  mState = state;
+  if (mState) {
+    mState->onEnter();
+  }
+}

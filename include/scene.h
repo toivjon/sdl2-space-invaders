@@ -43,6 +43,8 @@ namespace space_invaders
 
     void onKeyUp(SDL_KeyboardEvent& event);
     void onKeyDown(SDL_KeyboardEvent& event);
+
+    void setState(StatePtr state);
   protected:
     Game&     mGame;
     StatePtr  mState;
