@@ -11,8 +11,6 @@
 #include "collideable_entity.h"
 #include "image.h"
 
-#include <SDL.h>
-
 namespace space_invaders
 {
   class DrawableEntity : public CollideableEntity
