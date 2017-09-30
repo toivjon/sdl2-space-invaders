@@ -13,7 +13,7 @@ inline std::string toScoreString(int score) {
   return result.substr(result.length() - 4, 4);
 }
 
-Scene::Scene(Game& game) : mGame(game),
+Scene::Scene(Game& game) : mGame(game), mState(nullptr),
   mScore1Caption(std::make_shared<TextEntity>(game)),
   mHiScoreCaption(std::make_shared<TextEntity>(game)),
   mScore2Caption(std::make_shared<TextEntity>(game)),
@@ -65,7 +65,7 @@ void Scene::update(unsigned long dt)
   mHiScoreText->update(dt);
   mScore2Text->update(dt);
 
-  // TODO update the current state.
+  mState->update(dt);
 }
 
 void Scene::render(SDL_Renderer& renderer)
@@ -78,15 +78,15 @@ void Scene::render(SDL_Renderer& renderer)
   mHiScoreText->render(renderer);
   mScore2Text->render(renderer);
 
-  // TODO render the current state.
+  mState->render(renderer);
 }
 
 void Scene::onKeyUp(SDL_KeyboardEvent& event)
 {
-  // TODO pass to current state.
+  mState->onKeyUp(event);
 }
 
 void Scene::onKeyDown(SDL_KeyboardEvent& event)
 {
-  // TODO pass to current state.
+  mState->onKeyDown(event);
 }

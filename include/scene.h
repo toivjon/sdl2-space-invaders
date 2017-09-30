@@ -1,15 +1,13 @@
 /*! An abstraction of all scenes within the Space Invaders application.
  * 
- * Our implementation of the Space Invaders contains three different scenes
- * where each scene has typical game scene features, which are called when
- * the scene is either active or is being exited or entered. This abstraction
- * ensures that every scene will implement at least the required functions.
+ * Our implementation of the Space Invaders contains only a single scene,
+ * which has three different states available to shown to users. States are
+ * also used to navigate and switch between players in the multiplayer mode.
  */
 #ifndef SPACE_INVADERS_SCENE_H
 #define SPACE_INVADERS_SCENE_H
 
-// #include "text_entity.h"
-
+#include "state.h"
 #include <memory>
 
 // forward declarations in the global namespace.
@@ -46,7 +44,8 @@ namespace space_invaders
     void onKeyUp(SDL_KeyboardEvent& event);
     void onKeyDown(SDL_KeyboardEvent& event);
   protected:
-    Game& mGame;
+    Game&     mGame;
+    StatePtr  mState;
 
     std::shared_ptr<TextEntity> mScore1Caption;
     std::shared_ptr<TextEntity> mHiScoreCaption;
