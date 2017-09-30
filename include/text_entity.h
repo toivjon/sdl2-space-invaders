@@ -14,6 +14,11 @@ namespace space_invaders
   class TextEntity : public DrawableEntity
   {
   public:
+    /** A constant amount of toggles to perform after #blink is called. */
+    const int DEFAULT_BLINK_COUNT = 30;
+    /** A constant amount of updates (i.e. interval) between the blinks. */
+    const int DEFAULT_BLINK_FREQUENCY = 5;
+
     // ===============================
     // = forbidden default functions =
     // ===============================
@@ -31,14 +36,25 @@ namespace space_invaders
     TextEntity(Game& game);
     virtual ~TextEntity();
 
+    void update(unsigned long dt) override;
+
     void setText(const std::string& text);
     void setColor(const SDL_Color& color);
+
+    void blink();
+
+    void setBlinkCount(int count)         { mBlinkCount = count;          }
+    void setBlinkFrequency(int frequency) { mBlinkFrequency = frequency;  }
 
     const std::string& getText()  const { return mText;   }
     const SDL_Color&   getColor() const { return mColor;  }
   private:
     std::string mText;
     SDL_Color   mColor;
+    int         mBlinks;
+    int         mBlinkTimer;
+    int         mBlinkCount;
+    int         mBlinkFrequency;
   };
 }
 
