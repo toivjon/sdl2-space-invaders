@@ -42,8 +42,10 @@ namespace space_invaders
     void onKeyUp(SDL_KeyboardEvent& event);
     void onKeyDown(SDL_KeyboardEvent& event);
   private:
-    DrawableEntity mFooterLine;
-    Avatar         mAvatar;
+    DrawableEntity    mFooterLine;
+    Avatar            mAvatar;
+    CollideableEntity mLeftOobDetector;
+    CollideableEntity mRightOobDetector;
   };
 }
 
