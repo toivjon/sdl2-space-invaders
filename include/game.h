@@ -32,6 +32,7 @@ namespace space_invaders
   {
   public:
     enum class State { NOT_INITED, INITED, RUNNING, STOPPED };
+    enum class Player { PLAYER_1, PLAYER_2 };
   public:
     // ===============================
     // = forbidden default functions =
@@ -52,6 +53,10 @@ namespace space_invaders
     ~Game();
 
     int run();
+
+    void setActivePlayer(Player player);
+
+    Player getActivePlayer() const { return mActivePlayer; }
     
     int getPlayerCount() const            { return mPlayerCount;        }
     void setPlayerCount(int playerCount)  { mPlayerCount = playerCount; }
@@ -80,6 +85,7 @@ namespace space_invaders
     ScenePtr      mScene;
     ImagePtr      mSpriteSheet;
     int           mPlayerCount;
+    Player        mActivePlayer;
   };
 }
 

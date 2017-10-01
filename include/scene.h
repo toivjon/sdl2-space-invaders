@@ -45,6 +45,9 @@ namespace space_invaders
     void onKeyDown(SDL_KeyboardEvent& event);
 
     void setState(StatePtr state);
+
+    std::shared_ptr<TextEntity> getScore1Text() { return mScore1Text; }
+    std::shared_ptr<TextEntity> getScore2Text() { return mScore2Text; }
   protected:
     Game&     mGame;
     StatePtr  mState;

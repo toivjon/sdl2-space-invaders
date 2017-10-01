@@ -1,4 +1,5 @@
 #include "game.h"
+#include "text_entity.h"
 
 #include <chrono>
 #include <iostream>
@@ -22,7 +23,8 @@ Game::Game(int width, int height) : mState(State::NOT_INITED),
   mDeltaAccumulator(0),
   mScene(nullptr),
   mSpriteSheet(nullptr),
-  mPlayerCount(1)
+  mPlayerCount(1),
+  mActivePlayer(Player::PLAYER_1)
 {
   // initialize all SDL2 framework systems.
   if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
@@ -105,6 +107,12 @@ int Game::run()
       case SDL_QUIT:
         mState = State::STOPPED;
         break;
+      case SDL_KEYDOWN:
+        mScene->onKeyDown(event.key);
+        break;
+      case SDL_KEYUP:
+        mScene->onKeyUp(event.key);
+        break;
       }
     }
 
@@ -133,4 +141,25 @@ int Game::run()
   }
 
   return 0;
+}
+
+void Game::setActivePlayer(Player player)
+{
+  mActivePlayer = player;
+  if (mScene) {
+    auto score1 = mScene->getScore1Text();
+    auto score2 = mScene->getScore2Text();
+    if (player == Player::PLAYER_1) {
+      // blink and show only score for the 1st player.
+      score1->setVisible(true);
+      score1->blink();
+      score2->setVisible(false);
+    } else {
+      // blink and show only score for the 2nd player.
+      score2->setVisible(true);
+      score2->blink();
+      score1->setVisible(false);
+    }
+    // TODO change state to play player state.
+  }
 }
