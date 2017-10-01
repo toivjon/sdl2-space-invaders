@@ -1,5 +1,6 @@
 #include "movable_entity.h"
 
+#include <iostream> // TODO remove!
 #include <algorithm>
 
 using namespace space_invaders;
@@ -20,8 +21,8 @@ void MovableEntity::update(unsigned long dt)
   DrawableEntity::update(dt);
   mStepCounter = std::max(0, mStepCounter - 1);
   if (mStepCounter <= 0) {
-    this->setX(this->getX() + static_cast<int>(mDirectionX * mVelocity) * dt);
-    this->setY(this->getY() + static_cast<int>(mDirectionY * mVelocity) * dt);
+    this->setX(this->getX() + mDirectionX * mVelocity * dt);
+    this->setY(this->getY() + mDirectionY * mVelocity * dt);
     mStepCounter = mStepSize;
   }
 }

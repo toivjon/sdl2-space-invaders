@@ -39,10 +39,32 @@ void IngameState::onExit()
 
 void IngameState::onKeyUp(SDL_KeyboardEvent& event)
 {
-  // ...
+  switch (event.keysym.sym) {
+  case SDLK_LEFT:
+    if (mAvatar.isEnabled() && mAvatar.getDirectionX() < 0.f) {
+      mAvatar.setDirectionX(0.f);
+    }
+    break;
+  case SDLK_RIGHT:
+    if (mAvatar.isEnabled() && mAvatar.getDirectionX() > 0.f) {
+      mAvatar.setDirectionX(0.f);
+    }
+    break;
+  }
 }
 
 void IngameState::onKeyDown(SDL_KeyboardEvent& event)
 {
-  // ...
+  switch (event.keysym.sym) {
+  case SDLK_LEFT:
+    if (mAvatar.isEnabled()) {
+      mAvatar.setDirectionX(-1.f);
+    }
+    break;
+  case SDLK_RIGHT:
+    if (mAvatar.isEnabled()) {
+      mAvatar.setDirectionX(1.f);
+    }
+    break;
+  }
 }
