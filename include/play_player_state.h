@@ -14,6 +14,9 @@ namespace space_invaders
   class PlayPlayerState : public State
   {
   public:
+    /** A definition of ticks before this state automatically proceeds. */
+    const int VISIBLITY_TICKS = (30 * 5);
+
     // ===============================
     // = forbidden default functions =
     // ===============================
@@ -39,6 +42,8 @@ namespace space_invaders
 
     void onKeyUp(SDL_KeyboardEvent& event);
     void onKeyDown(SDL_KeyboardEvent& event);
+  private:
+    int mTickCounter;
   };
 }
 
