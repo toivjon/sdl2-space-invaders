@@ -20,7 +20,7 @@ void AnimatedEntity::update(unsigned long dt)
     mAnimationCounter = std::max(0, mAnimationCounter - 1);
     if (mAnimationCounter <= 0) {
       auto nextFrame = ((mAnimationFrameIndex + 1) % mCurrentAnimation.size());
-      this->setAnimationFrame(nextFrame);
+      setAnimationFrame(nextFrame);
       mAnimationCounter = mAnimationStepSize;
     }
   }
@@ -37,6 +37,7 @@ void AnimatedEntity::setCurrentAnimation(const std::string& name)
   if (mAnimations.find(name) != mAnimations.end()) {
     mCurrentAnimation = mAnimations[name];
     mAnimationCounter = mAnimationStepSize;
+    setAnimationFrame(0);
   }
 }
 
@@ -50,7 +51,7 @@ void AnimatedEntity::setAnimationFrame(unsigned int frameIndex)
     const auto& animationClip = mCurrentAnimation[frameIndex];
 
     // assign the new animation frame as the current frame.
-    this->setClip(animationClip);
+    setClip(animationClip);
   }
 }
 

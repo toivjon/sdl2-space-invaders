@@ -5,7 +5,8 @@ using namespace space_invaders;
 
 IngameState::IngameState(Game& game)
   : State(game),
-    mFooterLine(game)
+    mFooterLine(game),
+    mAvatar(game)
 {
   // initialoize the green static footer line at the bottom of the screen.
   mFooterLine.setImage(game.getSpriteSheet());
@@ -17,11 +18,13 @@ IngameState::IngameState(Game& game)
 void IngameState::update(unsigned long dt)
 {
   mFooterLine.update(dt);
+  mAvatar.update(dt);
 }
 
 void IngameState::render(SDL_Renderer& renderer)
 {
   mFooterLine.render(renderer);
+  mAvatar.render(renderer);
 }
 
 void IngameState::onEnter()
