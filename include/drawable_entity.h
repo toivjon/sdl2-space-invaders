@@ -37,6 +37,8 @@ namespace space_invaders
 
     void setImage(ImagePtr image);
 
+    void setClip(const SDL_Rect& clip);
+
     bool isVisible() const { return mVisible; }
 
           ImagePtr getImage()       { return mImage; }

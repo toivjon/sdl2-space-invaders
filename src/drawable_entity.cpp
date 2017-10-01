@@ -35,3 +35,10 @@ void DrawableEntity::setImage(ImagePtr image)
   }
   mImage = image;
 }
+
+void DrawableEntity::setClip(const SDL_Rect& clip)
+{
+  mClip = clip;
+  setWidth(mClip.w);
+  setHeight(mClip.h);
+}

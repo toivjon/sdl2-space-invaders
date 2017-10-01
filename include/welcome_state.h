@@ -10,6 +10,7 @@
 
 #include "state.h"
 #include "text_entity.h"
+#include "drawable_entity.h"
 
 namespace space_invaders
 {
@@ -48,6 +49,15 @@ namespace space_invaders
     TextEntity mMultiPlayerText;
     TextEntity mControlsText;
     TextEntity mTableCaptionText;
+    TextEntity mTableRow1Text;
+    TextEntity mTableRow2Text;
+    TextEntity mTableRow3Text;
+    TextEntity mTableRow4Text;
+
+    DrawableEntity mTableRow1Sprite;
+    DrawableEntity mTableRow2Sprite;
+    DrawableEntity mTableRow3Sprite;
+    DrawableEntity mTableRow4Sprite;
   };
 }
 
