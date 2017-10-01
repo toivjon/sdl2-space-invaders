@@ -6,9 +6,14 @@ using namespace space_invaders;
 
 PlayPlayerState::PlayPlayerState(Game& game)
   : State(game),
-    mTickCounter(VISIBLITY_TICKS)
+    mTickCounter(VISIBLITY_TICKS),
+    mText(game)
 {
-  // ...
+  // initialize the text describing the player to play next.
+  int playerIdx = (mGame.getActivePlayer() == Game::Player::PLAYER_1 ? 1 : 2);
+  mText.setText("PLAY PLAYER<" + std::to_string(playerIdx) + ">");
+  mText.setX(672 / 2 - mText.getWidth() / 2);
+  mText.setY(400);
 }
 
 void PlayPlayerState::update(unsigned long dt)
@@ -22,7 +27,7 @@ void PlayPlayerState::update(unsigned long dt)
 
 void PlayPlayerState::render(SDL_Renderer& renderer)
 {
-
+  mText.render(renderer);
 }
 
 void PlayPlayerState::onEnter()
