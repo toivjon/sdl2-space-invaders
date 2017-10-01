@@ -139,20 +139,31 @@ void WelcomeState::render(SDL_Renderer& renderer)
 
 void WelcomeState::onEnter()
 {
-
+  // ...
 }
 
 void WelcomeState::onExit()
 {
-
+  // ...
 }
 
 void WelcomeState::onKeyUp(SDL_KeyboardEvent& event)
 {
-  
+  switch (event.keysym.sym) {
+  case SDLK_1:
+    mGame.setPlayerCount(1);
+    // TODO set active player to 1.
+    break;
+  case SDLK_2:
+    mGame.setPlayerCount(2);
+    // TODO set active player to 1.
+    break;
+  default:
+    break;
+  }
 }
 
 void WelcomeState::onKeyDown(SDL_KeyboardEvent& event)
 {
-
+  // ...
 }

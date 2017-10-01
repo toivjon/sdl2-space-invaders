@@ -52,6 +52,9 @@ namespace space_invaders
     ~Game();
 
     int run();
+    
+    int getPlayerCount() const            { return mPlayerCount;        }
+    void setPlayerCount(int playerCount)  { mPlayerCount = playerCount; }
 
           SDL_Window* getWindow()       { return mWindow; }
     const SDL_Window* getWindow() const { return mWindow; }
@@ -76,6 +79,7 @@ namespace space_invaders
     unsigned long mDeltaAccumulator;
     ScenePtr      mScene;
     ImagePtr      mSpriteSheet;
+    int           mPlayerCount;
   };
 }
 

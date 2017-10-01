@@ -21,7 +21,8 @@ Game::Game(int width, int height) : mState(State::NOT_INITED),
   mPreviousTick(0),
   mDeltaAccumulator(0),
   mScene(nullptr),
-  mSpriteSheet(nullptr)
+  mSpriteSheet(nullptr),
+  mPlayerCount(1)
 {
   // initialize all SDL2 framework systems.
   if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
