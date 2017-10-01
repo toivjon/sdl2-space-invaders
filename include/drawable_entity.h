@@ -33,11 +33,13 @@ namespace space_invaders
     DrawableEntity(Game& game);
     virtual ~DrawableEntity();
 
+    void update(unsigned long dt) override;
     void render(SDL_Renderer& renderer);
 
     void setImage(ImagePtr image);
 
     void setClip(const SDL_Rect& clip);
+    void setDisappearCountdown(int timer);
 
     bool isVisible() const { return mVisible; }
 
@@ -52,6 +54,7 @@ namespace space_invaders
     bool     mVisible;
     ImagePtr mImage;
     SDL_Rect mClip;
+    int      mDisappearCountdown;
   };
 }
 
