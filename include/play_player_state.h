@@ -1,3 +1,9 @@
+/*! A starting state to indicate that the player should prepare to play.
+ *
+ * This scene creates a simple "PLAY PLAYER<?>" text for the next player that
+ * should prepare itself to play the game. This is a typical transition between
+ * the players when the multiplayer game mode is being used.
+*/
 #ifndef SPACE_INVADERS_PLAY_PLAYER_STATE_H
 #define SPACE_INVADERS_PLAY_PLAYER_STATE_H
 
