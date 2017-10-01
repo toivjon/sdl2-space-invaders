@@ -1,5 +1,6 @@
 #include "game.h"
 #include "text_entity.h"
+#include "play_player_state.h"
 
 #include <chrono>
 #include <iostream>
@@ -160,6 +161,6 @@ void Game::setActivePlayer(Player player)
       score2->blink();
       score1->setVisible(false);
     }
-    // TODO change state to play player state.
+    mScene->setState(std::make_shared<PlayPlayerState>(*this));
   }
 }
