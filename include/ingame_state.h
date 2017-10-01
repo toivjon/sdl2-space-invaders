@@ -7,6 +7,7 @@
 #ifndef SPACE_INVADERS_INGAME_STATE_H
 #define SPACE_INVADERS_INGAME_STATE_H
 
+#include "drawable_entity.h"
 #include "state.h"
 
 namespace space_invaders
@@ -39,6 +40,8 @@ namespace space_invaders
 
     void onKeyUp(SDL_KeyboardEvent& event);
     void onKeyDown(SDL_KeyboardEvent& event);
+  private:
+    DrawableEntity mFooterLine;
   };
 }
 
