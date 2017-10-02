@@ -9,6 +9,7 @@ IngameState::IngameState(Game& game)
     mAvatar(game),
     mLeftOobDetector(game),
     mRightOobDetector(game),
+    mTopOobDetector(game),
     mAvatarLaser(game)
 {
   // initialoize the green static footer line at the bottom of the screen.
@@ -28,6 +29,12 @@ IngameState::IngameState(Game& game)
   mRightOobDetector.setY(0);
   mRightOobDetector.setExtentX(50);
   mRightOobDetector.setExtentY(768 / 2);
+
+  // initialize the out-of-bounds detector for the top side of the scene.
+  mTopOobDetector.setX(0);
+  mTopOobDetector.setY(0);
+  mTopOobDetector.setExtentX(768 / 2);
+  mTopOobDetector.setExtentY(45);
 }
 
 void IngameState::update(unsigned long dt)

@@ -47,6 +47,7 @@ namespace space_invaders
     Avatar            mAvatar;
     CollideableEntity mLeftOobDetector;
     CollideableEntity mRightOobDetector;
+    CollideableEntity mTopOobDetector;
     AvatarLaser       mAvatarLaser;
   };
 }
