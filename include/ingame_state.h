@@ -8,6 +8,7 @@
 #define SPACE_INVADERS_INGAME_STATE_H
 
 #include "avatar.h"
+#include "avatar_laser.h"
 #include "drawable_entity.h"
 #include "state.h"
 
@@ -46,6 +47,7 @@ namespace space_invaders
     Avatar            mAvatar;
     CollideableEntity mLeftOobDetector;
     CollideableEntity mRightOobDetector;
+    AvatarLaser       mAvatarLaser;
   };
 }
 

@@ -8,7 +8,8 @@ IngameState::IngameState(Game& game)
     mFooterLine(game),
     mAvatar(game),
     mLeftOobDetector(game),
-    mRightOobDetector(game)
+    mRightOobDetector(game),
+    mAvatarLaser(game)
 {
   // initialoize the green static footer line at the bottom of the screen.
   mFooterLine.setImage(game.getSpriteSheet());
@@ -33,6 +34,7 @@ void IngameState::update(unsigned long dt)
 {
   mFooterLine.update(dt);
   mAvatar.update(dt);
+  mAvatarLaser.update(dt);
 
   // check that the avatar cannot go out-of-bounds from the scene boundaries.
   const auto avatarDirection = mAvatar.getDirectionX();
@@ -53,6 +55,7 @@ void IngameState::render(SDL_Renderer& renderer)
 {
   mFooterLine.render(renderer);
   mAvatar.render(renderer);
+  mAvatarLaser.render(renderer);
 }
 
 void IngameState::onEnter()
@@ -76,6 +79,19 @@ void IngameState::onKeyUp(SDL_KeyboardEvent& event)
   case SDLK_RIGHT:
     if (mAvatar.isEnabled() && mAvatar.getDirectionX() > 0.f) {
       mAvatar.setDirectionX(0.f);
+    }
+    break;
+  case SDLK_SPACE:
+    if (mAvatar.isEnabled() && mAvatarLaser.isVisible() == false) {
+      mAvatarLaser.setVisible(true);
+      mAvatarLaser.setEnabled(true);
+      mAvatarLaser.setDirectionY(-1.f);
+      mAvatarLaser.setX(mAvatar.getCenterX() - mAvatarLaser.getExtentX());
+      mAvatarLaser.setY(mAvatar.getY());
+      mAvatarLaser.setCurrentAnimation("normal");
+      mAvatarLaser.setAnimationFrame(0);
+
+      // TODO maintain the laser counter... in user context?
     }
     break;
   }
