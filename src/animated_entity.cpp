@@ -50,8 +50,16 @@ void AnimatedEntity::setAnimationFrame(unsigned int frameIndex)
     // get a reference to the next frame dimensions.
     const auto& animationClip = mCurrentAnimation[frameIndex];
 
+    // store current center x and y positions.
+    auto centerX = getCenterX();
+    auto centerY = getCenterY();
+
     // assign the new animation frame as the current frame.
     setClip(animationClip);
+
+    // restore center x and y positions.
+    setCenterX(centerX);
+    setCenterY(centerY);
   }
 }
 
