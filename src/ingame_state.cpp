@@ -56,6 +56,14 @@ void IngameState::update(unsigned long dt)
       mAvatar.setX(mRightOobDetector.getX() - mAvatar.getWidth());
     }
   }
+
+  // check whether the avatar laser beam hits something.
+  if (mAvatarLaser.isEnabled()) {
+    if (mAvatarLaser.collides(mTopOobDetector)) {
+      mAvatarLaser.setCurrentAnimation("top-wall-hit");
+      mAvatarLaser.explode();
+    }
+  }
 }
 
 void IngameState::render(SDL_Renderer& renderer)
