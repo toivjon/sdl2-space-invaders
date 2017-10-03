@@ -34,7 +34,7 @@ IngameState::IngameState(Game& game)
   mTopOobDetector.setX(0);
   mTopOobDetector.setY(0);
   mTopOobDetector.setExtentX(768 / 2);
-  mTopOobDetector.setExtentY(45);
+  mTopOobDetector.setExtentY(70);
 }
 
 void IngameState::update(unsigned long dt)
