@@ -1,6 +1,5 @@
 #include "movable_entity.h"
 
-#include <iostream> // TODO remove!
 #include <algorithm>
 
 using namespace space_invaders;
