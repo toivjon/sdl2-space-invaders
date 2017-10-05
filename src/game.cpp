@@ -164,3 +164,13 @@ void Game::setActivePlayer(Player player)
     mScene->setState(std::make_shared<PlayPlayerState>(*this));
   }
 }
+
+PlayerContext& Game::getActivePlayerContext()
+{
+  return (mActivePlayer == Player::PLAYER_1 ? mPlayerContext1 : mPlayerContext2);
+}
+
+const PlayerContext& Game::getActivePlayerContext() const
+{
+  return (mActivePlayer == Player::PLAYER_1 ? mPlayerContext1 : mPlayerContext2);
+}

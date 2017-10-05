@@ -57,6 +57,9 @@ namespace space_invaders
 
     void setActivePlayer(Player player);
 
+          PlayerContext& getActivePlayerContext();
+    const PlayerContext& getActivePlayerContext() const;
+
     Player getActivePlayer() const { return mActivePlayer; }
     
     int getPlayerCount() const            { return mPlayerCount;        }
