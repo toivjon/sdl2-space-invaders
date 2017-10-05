@@ -27,6 +27,8 @@ void Avatar::explode()
   setDisappearCountdown(6 * 8);
 
   // decrement lives and start the scene relaunch counter.
+  auto& ctx = mGame.getActivePlayerContext();
+  ctx.setLives(ctx.getLives() - 1);
   // ... TODO
 }
 
