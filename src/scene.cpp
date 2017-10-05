@@ -56,8 +56,13 @@ Scene::Scene(Game& game) : mGame(game),
 
 void Scene::update(unsigned long dt)
 {
-  // TODO ensure player 1 score validity.
-  // TODO ensure player 2 score validity.
+  // get references to both player context containers.
+  const auto& ctx1 = mGame.getPlayerContext1();
+  const auto& ctx2 = mGame.getPlayerContext2();
+
+  // ensure that player scores are up-to-date.
+  mScore1Text->setText(toScoreString(ctx1.getScore()));
+  mScore2Text->setText(toScoreString(ctx2.getScore()));
 
   mScore1Caption->update(dt);
   mHiScoreCaption->update(dt);
