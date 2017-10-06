@@ -43,7 +43,7 @@ IngameState::IngameState(Game& game)
   auto& ctx = mGame.getActivePlayerContext();
   mLifesText.setText(std::to_string(ctx.getLives()));
   mLifesText.setX(27);
-  mLifesText.setY(743 - mLifesText.getHeight() / 2);
+  mLifesText.setY(743 - mLifesText.getHeight() + 5);
 
   // initialize a sprite describing whether the player has at least one life left.
   mLifeSprite1.setImage(mGame.getSpriteSheet());
