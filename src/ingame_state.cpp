@@ -106,7 +106,9 @@ void IngameState::onKeyUp(SDL_KeyboardEvent& event)
       mAvatarLaser.setCurrentAnimation("normal");
       mAvatarLaser.setAnimationFrame(0);
 
-      // TODO maintain the laser counter... in user context?
+      // increment the shot count that is used in variety of places.
+      auto& ctx = mGame.getActivePlayerContext();
+      ctx.setShotCount(ctx.getShotCount() + 1);
     }
     break;
   }

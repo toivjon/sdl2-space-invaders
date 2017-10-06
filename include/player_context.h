@@ -34,14 +34,17 @@ namespace space_invaders
     void setLevel(int level) { mLevel = level; }
     void setScore(int score) { mScore = score; }
     void setLives(int lives) { mLives = lives; }
+    void setShotCount(int count) { mShotCount = count; }
 
     int getLevel() const { return mLevel; }
     int getScore() const { return mScore; }
     int getLives() const { return mLives; }
+    int getShotCount() const { return mShotCount; }
   private:
     int mLevel;
     int mScore;
     int mLives;
+    int mShotCount;
     // TODO alien states.
     // TODO shield states.
   };
