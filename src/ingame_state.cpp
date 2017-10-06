@@ -11,7 +11,9 @@ IngameState::IngameState(Game& game)
     mRightOobDetector(game),
     mTopOobDetector(game),
     mAvatarLaser(game),
-    mLifesText(game)
+    mLifesText(game),
+    mLifeSprite1(game),
+    mLifeSprite2(game)
 {
   // initialoize the green static footer line at the bottom of the screen.
   mFooterLine.setImage(game.getSpriteSheet());
@@ -42,6 +44,24 @@ IngameState::IngameState(Game& game)
   mLifesText.setText(std::to_string(ctx.getLives()));
   mLifesText.setX(27);
   mLifesText.setY(743 - mLifesText.getHeight() / 2);
+
+  // initialize a sprite describing whether the player has at least one life left.
+  mLifeSprite1.setImage(mGame.getSpriteSheet());
+  mLifeSprite1.setWidth(40);
+  mLifeSprite1.setHeight(24);
+  mLifeSprite1.setX(66);
+  mLifeSprite1.setY(720);
+  mLifeSprite1.setClip({ 85, 5, 40, 24 });
+  mLifeSprite1.setVisible(ctx.getLives() > 1);
+
+  // initialize a sprite describing whether the player has at least two lifes left.
+  mLifeSprite2.setImage(mGame.getSpriteSheet());
+  mLifeSprite2.setWidth(40);
+  mLifeSprite2.setHeight(24);
+  mLifeSprite2.setX(66 + 49);
+  mLifeSprite2.setY(720);
+  mLifeSprite2.setClip({ 85, 5, 40, 24 });
+  mLifeSprite2.setVisible(ctx.getLives() > 2);
 }
 
 void IngameState::update(unsigned long dt)
@@ -79,6 +99,8 @@ void IngameState::render(SDL_Renderer& renderer)
   mAvatar.render(renderer);
   mAvatarLaser.render(renderer);
   mLifesText.render(renderer);
+  mLifeSprite1.render(renderer);
+  mLifeSprite2.render(renderer);
 }
 
 void IngameState::onEnter()

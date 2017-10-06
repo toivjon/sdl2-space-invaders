@@ -51,7 +51,9 @@ namespace space_invaders
     CollideableEntity mTopOobDetector;
     AvatarLaser       mAvatarLaser;
     TextEntity        mLifesText;
-  };
+    DrawableEntity    mLifeSprite1;
+    DrawableEntity    mLifeSprite2;
+  }; 
 }
 
 #endif
