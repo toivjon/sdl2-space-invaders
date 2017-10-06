@@ -15,8 +15,8 @@ Alien::Alien(Game& game, int index) : AnimatedEntity(game), mIndex(index)
   setHeight(24);
 
   // resolve the row and column based on the alien index.
-  auto row = (index / 5);
-  auto col = (index % 5);
+  auto row = (index / ALIENS_PER_ROW);
+  auto col = (index % ALIENS_PER_ROW);
 
   // specify alien specific properties.
   if (row == 0) {
@@ -58,5 +58,5 @@ int Alien::resolveYPosition()
   if (playerLevel > 5) {
     y += 24;
   }
-  return y + (48 * (mIndex / 5));
+  return y + (48 * (mIndex / ALIENS_PER_ROW));
 }
