@@ -11,6 +11,7 @@
 #include "avatar_laser.h"
 #include "drawable_entity.h"
 #include "state.h"
+#include "text_entity.h"
 
 namespace space_invaders
 {
@@ -49,6 +50,7 @@ namespace space_invaders
     CollideableEntity mRightOobDetector;
     CollideableEntity mTopOobDetector;
     AvatarLaser       mAvatarLaser;
+    TextEntity        mLifesText;
   };
 }
 

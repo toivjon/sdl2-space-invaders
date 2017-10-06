@@ -10,7 +10,8 @@ IngameState::IngameState(Game& game)
     mLeftOobDetector(game),
     mRightOobDetector(game),
     mTopOobDetector(game),
-    mAvatarLaser(game)
+    mAvatarLaser(game),
+    mLifesText(game)
 {
   // initialoize the green static footer line at the bottom of the screen.
   mFooterLine.setImage(game.getSpriteSheet());
@@ -35,6 +36,12 @@ IngameState::IngameState(Game& game)
   mTopOobDetector.setY(0);
   mTopOobDetector.setExtentX(768 / 2);
   mTopOobDetector.setExtentY(70);
+
+  // initialize the text indicating the amount of lifes.
+  auto& ctx = mGame.getActivePlayerContext();
+  mLifesText.setText(std::to_string(ctx.getLives()));
+  mLifesText.setX(27);
+  mLifesText.setY(743 - mLifesText.getHeight() / 2);
 }
 
 void IngameState::update(unsigned long dt)
@@ -71,6 +78,7 @@ void IngameState::render(SDL_Renderer& renderer)
   mFooterLine.render(renderer);
   mAvatar.render(renderer);
   mAvatarLaser.render(renderer);
+  mLifesText.render(renderer);
 }
 
 void IngameState::onEnter()
