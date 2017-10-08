@@ -8,8 +8,8 @@ Avatar::Avatar(Game& game) : AnimatedEntity(game)
 {
   setImage(game.getSpriteSheet());
   addAnimationFrame("still", { 86, 5, 40, 24 });
-  addAnimationFrame("explosion", {});
-  addAnimationFrame("explosion", {});
+  addAnimationFrame("explosion", { 128, 91, 45, 24 });
+  addAnimationFrame("explosion", { 178, 91, 45, 24 });
   setCurrentAnimation("still");
   setX(getWidth() / 2);
   setY(648);
