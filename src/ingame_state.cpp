@@ -65,14 +65,12 @@ IngameState::IngameState(Game& game)
   mLifeSprite2.setVisible(ctx.getLives() > 2);
 
   // get aliens from the user context or create them if not yet created.
-  /*
   mAliens = ctx.getAliens();
   if (mAliens.empty()) {
-    */
     for (auto i = 0; i < 55; i++) {
       mAliens.push_back(std::make_shared<Alien>(game, i));
     }
-  // }
+  }
 }
 
 void IngameState::update(unsigned long dt)
