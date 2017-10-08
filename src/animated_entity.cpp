@@ -29,7 +29,6 @@ void AnimatedEntity::update(unsigned long dt)
 void AnimatedEntity::setAnimationStepSize(int stepSize)
 {
   mAnimationStepSize = stepSize;
-  mAnimationCounter = mAnimationStepSize;
 }
 
 void AnimatedEntity::setCurrentAnimation(const std::string& name)

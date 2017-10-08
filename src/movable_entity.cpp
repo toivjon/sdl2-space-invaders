@@ -29,5 +29,4 @@ void MovableEntity::update(unsigned long dt)
 void MovableEntity::setStepSize(int stepSize)
 {
   mStepSize = stepSize;
-  mStepCounter = stepSize;
 }
