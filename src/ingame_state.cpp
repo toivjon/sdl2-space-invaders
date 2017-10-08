@@ -94,6 +94,15 @@ void IngameState::update(unsigned long dt)
   mAvatar.update(dt);
   mAvatarLaser.update(dt);
 
+  // decrement the relaunch timer if it has been activated.
+  auto& ctx = mGame.getActivePlayerContext();
+  auto relaunchTimer = ctx.getRelaunchTimer();
+  if (relaunchTimer > 0) {
+    relaunchTimer--;
+    ctx.setRelaunchTimer(relaunchTimer);
+    return;
+  }
+
   // check that the avatar cannot go out-of-bounds from the scene boundaries.
   const auto avatarDirection = mAvatar.getDirectionX();
   if (avatarDirection < 0.f) {
@@ -152,7 +161,6 @@ void IngameState::update(unsigned long dt)
 
   // check whether all aliens are destroyed i.e. the level is cleared.
   if (activeAlienCount <= 0) {
-    auto& ctx = mGame.getActivePlayerContext();
     ctx.setLevel(ctx.getLevel() + 1);
     auto scene = mGame.getScene();
     scene->setState(std::make_shared<PlayPlayerState>(mGame));

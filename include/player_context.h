@@ -39,18 +39,21 @@ namespace space_invaders
     void setScore(int score) { mScore = score; }
     void setLives(int lives) { mLives = lives; }
     void setShotCount(int count) { mShotCount = count; }
+    void setRelaunchTimer(int timer) { mRelaunchTimer = timer; }
     void setAliens(const std::vector<AlienPtr>& aliens) { mAliens = aliens; }
 
     int getLevel() const { return mLevel; }
     int getScore() const { return mScore; }
     int getLives() const { return mLives; }
     int getShotCount() const { return mShotCount; }
+    int getRelaunchTimer() const { return mRelaunchTimer; }
     const std::vector<AlienPtr>& getAliens() const { return mAliens; }
   private:
     int mLevel;
     int mScore;
     int mLives;
     int mShotCount;
+    int mRelaunchTimer;
     std::vector<AlienPtr> mAliens;
     // TODO shield states.
   };

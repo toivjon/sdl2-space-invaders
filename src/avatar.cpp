@@ -25,12 +25,12 @@ void Avatar::explode()
   // start the explosion animation for the avatar.
   setCurrentAnimation("explosion");
   setAnimationStepSize(6);
-  setDisappearCountdown(6 * 8);
+  setDisappearCountdown(48);
 
   // decrement lives and start the scene relaunch counter.
   auto& ctx = mGame.getActivePlayerContext();
   ctx.setLives(ctx.getLives() - 1);
-  // ... TODO
+  ctx.setRelaunchTimer(150);
 }
 
 void Avatar::reset()
