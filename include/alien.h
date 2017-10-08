@@ -36,10 +36,15 @@ namespace space_invaders
 
     Alien(Game& game, int index);
     ~Alien() override = default;
+
+    void disappear();
+
+    int getPoints() const { return mPoints; }
   private:
     int resolveYPosition();
   private:
     int mIndex;
+    int mPoints;
   };
   typedef std::shared_ptr<Alien> AlienPtr;
 }

@@ -101,6 +101,26 @@ void IngameState::update(unsigned long dt)
     if (mAvatarLaser.collides(mTopOobDetector)) {
       mAvatarLaser.setCurrentAnimation("top-wall-hit");
       mAvatarLaser.explode();
+    } else {
+      for (auto& alien : mAliens) {
+        if (mAvatarLaser.collides(*alien)) {
+          // create an alien laser to explode at the alien position.
+          mAvatarLaser.setCurrentAnimation("alien-hit");
+          mAvatarLaser.explode();
+          mAvatarLaser.setX(alien->getCenterX() - mAvatarLaser.getExtentX());
+          mAvatarLaser.setY(alien->getCenterY() - mAvatarLaser.getExtentY());
+          alien->disappear();
+
+          // add the alien row specific amount of points to the player.
+          auto& ctx = mGame.getActivePlayerContext();
+          auto points = alien->getPoints();
+          ctx.addScore(points);
+
+          // TODO speed up the movement of the aliens.
+
+          break;
+        }
+      }
     }
   }
 }
