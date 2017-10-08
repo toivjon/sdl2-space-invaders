@@ -139,8 +139,10 @@ void IngameState::update(unsigned long dt)
         activeAlienCount++;
         alien->update(dt);
 
-        // check whether the target alien has just landed.
+        // check whether the target alien has just landed or hit the player.
         if (alien->collides(mFooterLine)) {
+          mAvatar.explode();
+        } else if (alien->collides(mAvatar)) {
           mAvatar.explode();
         }
       }
