@@ -16,9 +16,11 @@ namespace space_invaders
   {
   public:
     /** The initial step size of the aliens. */
-    const int INITIAL_STEP_SIZE = 55;
+    static const int INITIAL_STEP_SIZE = 55;
+    /** The amount of steps to speed up the alien movement on each destruct. */
+    static const int STEP_DECREMENT_SIZE = 1;
     /** The amount of aliens per row. */
-    const int ALIENS_PER_ROW = 11;
+    static const int ALIENS_PER_ROW = 11;
 
     // ===============================
     // = forbidden default functions =

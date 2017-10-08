@@ -116,8 +116,12 @@ void IngameState::update(unsigned long dt)
           auto points = alien->getPoints();
           ctx.addScore(points);
 
-          // TODO speed up the movement of the aliens.
-
+          // speed up the movement of the aliens.
+          auto newStepSize = alien->getStepSize() - Alien::STEP_DECREMENT_SIZE;
+          for (auto& a : mAliens) {
+            a->setStepSize(newStepSize);
+            a->setAnimationStepSize(newStepSize);
+          }
           break;
         }
       }
