@@ -1,6 +1,7 @@
 #include "ingame_state.h"
 #include "game.h"
 #include "player_context.h"
+#include "play_player_state.h"
 
 using namespace space_invaders;
 
@@ -147,6 +148,15 @@ void IngameState::update(unsigned long dt)
         }
       }
     }
+  }
+
+  // check whether all aliens are destroyed i.e. the level is cleared.
+  if (activeAlienCount <= 0) {
+    auto& ctx = mGame.getActivePlayerContext();
+    ctx.setLevel(ctx.getLevel() + 1);
+    auto scene = mGame.getScene();
+    scene->setState(std::make_shared<PlayPlayerState>(mGame));
+    return;
   }
 
   // check whether the avatar laser beam hits something.
