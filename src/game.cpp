@@ -1,5 +1,6 @@
 #include "game.h"
 #include "text_entity.h"
+#include "player_context.h"
 #include "play_player_state.h"
 
 #include <chrono>
@@ -25,7 +26,9 @@ Game::Game(int width, int height) : mState(State::NOT_INITED),
   mScene(nullptr),
   mSpriteSheet(nullptr),
   mPlayerCount(1),
-  mActivePlayer(Player::PLAYER_1)
+  mActivePlayer(Player::PLAYER_1),
+  mPlayerContext1(std::make_shared<PlayerContext>()),
+  mPlayerContext2(std::make_shared<PlayerContext>())
 {
   // initialize all SDL2 framework systems.
   if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
@@ -167,10 +170,10 @@ void Game::setActivePlayer(Player player)
 
 PlayerContext& Game::getActivePlayerContext()
 {
-  return (mActivePlayer == Player::PLAYER_1 ? mPlayerContext1 : mPlayerContext2);
+  return (mActivePlayer == Player::PLAYER_1 ? *mPlayerContext1 : *mPlayerContext2);
 }
 
 const PlayerContext& Game::getActivePlayerContext() const
 {
-  return (mActivePlayer == Player::PLAYER_1 ? mPlayerContext1 : mPlayerContext2);
+  return (mActivePlayer == Player::PLAYER_1 ? *mPlayerContext1 : *mPlayerContext2);
 }

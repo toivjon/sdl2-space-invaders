@@ -1,5 +1,6 @@
 #include "ingame_state.h"
 #include "game.h"
+#include "player_context.h"
 
 using namespace space_invaders;
 
@@ -62,6 +63,16 @@ IngameState::IngameState(Game& game)
   mLifeSprite2.setY(720);
   mLifeSprite2.setClip({ 85, 5, 40, 24 });
   mLifeSprite2.setVisible(ctx.getLives() > 2);
+
+  // get aliens from the user context or create them if not yet created.
+  /*
+  mAliens = ctx.getAliens();
+  if (mAliens.empty()) {
+    */
+    for (auto i = 0; i < 55; i++) {
+      mAliens.push_back(std::make_shared<Alien>(game, i));
+    }
+  // }
 }
 
 void IngameState::update(unsigned long dt)
@@ -69,6 +80,9 @@ void IngameState::update(unsigned long dt)
   mFooterLine.update(dt);
   mAvatar.update(dt);
   mAvatarLaser.update(dt);
+  for (auto& alien : mAliens) {
+    alien->update(dt);
+  }
 
   // check that the avatar cannot go out-of-bounds from the scene boundaries.
   const auto avatarDirection = mAvatar.getDirectionX();
@@ -101,6 +115,9 @@ void IngameState::render(SDL_Renderer& renderer)
   mLifesText.render(renderer);
   mLifeSprite1.render(renderer);
   mLifeSprite2.render(renderer);
+  for (auto& alien : mAliens) {
+    alien->render(renderer);
+  }
 }
 
 void IngameState::onEnter()

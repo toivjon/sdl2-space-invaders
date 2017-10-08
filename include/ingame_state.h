@@ -12,6 +12,9 @@
 #include "drawable_entity.h"
 #include "state.h"
 #include "text_entity.h"
+#include "alien.h"
+
+#include <vector>
 
 namespace space_invaders
 {
@@ -44,15 +47,16 @@ namespace space_invaders
     void onKeyUp(SDL_KeyboardEvent& event);
     void onKeyDown(SDL_KeyboardEvent& event);
   private:
-    DrawableEntity    mFooterLine;
-    Avatar            mAvatar;
-    CollideableEntity mLeftOobDetector;
-    CollideableEntity mRightOobDetector;
-    CollideableEntity mTopOobDetector;
-    AvatarLaser       mAvatarLaser;
-    TextEntity        mLifesText;
-    DrawableEntity    mLifeSprite1;
-    DrawableEntity    mLifeSprite2;
+    DrawableEntity        mFooterLine;
+    Avatar                mAvatar;
+    CollideableEntity     mLeftOobDetector;
+    CollideableEntity     mRightOobDetector;
+    CollideableEntity     mTopOobDetector;
+    AvatarLaser           mAvatarLaser;
+    TextEntity            mLifesText;
+    DrawableEntity        mLifeSprite1;
+    DrawableEntity        mLifeSprite2;
+    std::vector<AlienPtr> mAliens;
   }; 
 }
 

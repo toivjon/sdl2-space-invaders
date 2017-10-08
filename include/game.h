@@ -19,7 +19,6 @@
 
 #include "scene.h"
 #include "image.h"
-#include "player_context.h"
 
 // forward declarations in the global namespace.
 struct SDL_Window;
@@ -29,6 +28,7 @@ struct _TTF_Font;
 
 namespace space_invaders
 {
+  class PlayerContext;
   class Game final
   {
   public:
@@ -80,11 +80,11 @@ namespace space_invaders
           ImagePtr getSpriteSheet()       { return mSpriteSheet; }
     const ImagePtr getSpriteSheet() const { return mSpriteSheet; }
 
-          PlayerContext& getPlayerContext1()        { return mPlayerContext1; }
-    const PlayerContext& getPlayerContext1() const  { return mPlayerContext1; }
+          PlayerContext& getPlayerContext1()        { return *mPlayerContext1; }
+    const PlayerContext& getPlayerContext1() const  { return *mPlayerContext1; }
 
-          PlayerContext& getPlayerContext2()        { return mPlayerContext2; }
-    const PlayerContext& getPlayerContext2() const  { return mPlayerContext2; }
+          PlayerContext& getPlayerContext2()        { return *mPlayerContext2; }
+    const PlayerContext& getPlayerContext2() const  { return *mPlayerContext2; }
   private:
     State         mState;
     SDL_Window*   mWindow;
@@ -96,8 +96,8 @@ namespace space_invaders
     ImagePtr      mSpriteSheet;
     int           mPlayerCount;
     Player        mActivePlayer;
-    PlayerContext mPlayerContext1;
-    PlayerContext mPlayerContext2;
+    std::shared_ptr<PlayerContext> mPlayerContext1;
+    std::shared_ptr<PlayerContext> mPlayerContext2;
   };
 }
 

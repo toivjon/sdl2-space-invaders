@@ -9,6 +9,10 @@
 #ifndef SPACE_INVADER_PLAYER_CONTEXT_H
 #define SPACE_INVADER_PLAYER_CONTEXT_H
 
+#include "alien.h"
+
+#include <vector>
+
 namespace space_invaders
 {
   class PlayerContext
@@ -35,17 +39,19 @@ namespace space_invaders
     void setScore(int score) { mScore = score; }
     void setLives(int lives) { mLives = lives; }
     void setShotCount(int count) { mShotCount = count; }
+    void setAliens(const std::vector<AlienPtr>& aliens) { mAliens = aliens; }
 
     int getLevel() const { return mLevel; }
     int getScore() const { return mScore; }
     int getLives() const { return mLives; }
     int getShotCount() const { return mShotCount; }
+    const std::vector<AlienPtr>& getAliens() const { return mAliens; }
   private:
     int mLevel;
     int mScore;
     int mLives;
     int mShotCount;
-    // TODO alien states.
+    std::vector<AlienPtr> mAliens;
     // TODO shield states.
   };
 }

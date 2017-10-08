@@ -1,5 +1,6 @@
 #include "scene.h"
 #include "game.h"
+#include "player_context.h"
 #include "text_entity.h"
 #include "welcome_state.h"
 

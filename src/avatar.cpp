@@ -1,5 +1,6 @@
 #include "avatar.h"
 #include "game.h"
+#include "player_context.h"
 
 using namespace space_invaders;
 
