@@ -14,7 +14,9 @@ IngameState::IngameState(Game& game)
     mAvatarLaser(game),
     mLifesText(game),
     mLifeSprite1(game),
-    mLifeSprite2(game)
+    mLifeSprite2(game),
+    mAlienLeftDirector(game),
+    mAlienRightDirector(game)
 {
   // initialoize the green static footer line at the bottom of the screen.
   mFooterLine.setImage(game.getSpriteSheet());
@@ -71,6 +73,18 @@ IngameState::IngameState(Game& game)
       mAliens.push_back(std::make_shared<Alien>(game, i));
     }
   }
+
+  // initialize the left alien director for alien movement direction change.
+  mAlienLeftDirector.setX(-45);
+  mAlienLeftDirector.setY(0);
+  mAlienLeftDirector.setExtentX(45);
+  mAlienLeftDirector.setExtentY(768 / 2);
+
+  // initialize the right alien director for alien movement direction change.
+  mAlienRightDirector.setX(672 - 45);
+  mAlienRightDirector.setY(0);
+  mAlienRightDirector.setExtentX(45);
+  mAlienRightDirector.setExtentY(768 / 2);
 }
 
 void IngameState::update(unsigned long dt)
@@ -78,9 +92,6 @@ void IngameState::update(unsigned long dt)
   mFooterLine.update(dt);
   mAvatar.update(dt);
   mAvatarLaser.update(dt);
-  for (auto& alien : mAliens) {
-    alien->update(dt);
-  }
 
   // check that the avatar cannot go out-of-bounds from the scene boundaries.
   const auto avatarDirection = mAvatar.getDirectionX();
@@ -93,6 +104,43 @@ void IngameState::update(unsigned long dt)
     if (mRightOobDetector.collides(mAvatar)) {
       mAvatar.setDirectionX(0.f);
       mAvatar.setX(mRightOobDetector.getX() - mAvatar.getWidth());
+    }
+  }
+
+  // check whether any of the aliens hits the alien director bounds.
+  auto alienMovementChangeRequired = false;
+  auto aliensDirection = mAliens[0]->getDirectionX();
+  for (auto& alien : mAliens) {
+    if (aliensDirection > 0) {
+      if (mAlienRightDirector.collides(*alien)) {
+        alienMovementChangeRequired = true;
+        break;
+      }
+    } else {
+      if (mAlienLeftDirector.collides(*alien)) {
+        alienMovementChangeRequired = true;
+        break;
+      }
+    }
+  }
+
+  // iterate over aliens and perform alien specific update operations.
+  auto activeAlienCount = 0;
+  if (mAvatar.isEnabled()) {
+    for (auto& alien : mAliens) {
+      // drop alien downwards and change the movement if required.
+      if (alienMovementChangeRequired) {
+        alien->setDirectionX(-aliensDirection);
+        alien->setY(alien->getY() + alien->getHeight());
+      }
+
+      // perform active calculation and update active aliens.
+      if (alien->isVisible()) {
+        activeAlienCount++;
+        alien->update(dt);
+
+        // TODO check whether the alien has just landed.
+      }
     }
   }
 

@@ -57,6 +57,8 @@ namespace space_invaders
     DrawableEntity        mLifeSprite1;
     DrawableEntity        mLifeSprite2;
     std::vector<AlienPtr> mAliens;
+    CollideableEntity     mAlienLeftDirector;
+    CollideableEntity     mAlienRightDirector;
   }; 
 }
 
