@@ -60,6 +60,9 @@ void AnimatedEntity::setAnimationFrame(unsigned int frameIndex)
     // restore center x and y positions.
     setCenterX(centerX);
     setCenterY(centerY);
+
+    // store the new index.
+    mAnimationFrameIndex = frameIndex;
   }
 }
 
