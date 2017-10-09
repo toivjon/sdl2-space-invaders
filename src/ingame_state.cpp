@@ -173,7 +173,9 @@ void IngameState::update(unsigned long dt)
 
           // show the game over text and also the score for the 1st player.
           mGameOverText.setVisible(true);
-          // view the player 1 score.
+          auto scene = mGame.getScene();
+          auto score1 = scene->getScore1Text();
+          score1->setVisible(true);
           return;
         } else {
           // was not the last life, so we can just switch to next player.
