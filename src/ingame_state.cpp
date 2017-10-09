@@ -17,7 +17,8 @@ IngameState::IngameState(Game& game)
     mLifeSprite1(game),
     mLifeSprite2(game),
     mAlienLeftDirector(game),
-    mAlienRightDirector(game)
+    mAlienRightDirector(game),
+    mGameOverText(game)
 {
   // initialoize the green static footer line at the bottom of the screen.
   mFooterLine.setImage(game.getSpriteSheet());
@@ -86,21 +87,105 @@ IngameState::IngameState(Game& game)
   mAlienRightDirector.setY(0);
   mAlienRightDirector.setExtentX(45);
   mAlienRightDirector.setExtentY(768 / 2);
+
+  // initialize the text that indicates that the game has ended.
+  mGameOverText.setText("GAME OVER");
+  mGameOverText.setColor({245, 3, 5, 255 });
+  mGameOverText.setX(672 / 2 - mGameOverText.getExtentX());
+  mGameOverText.setY(135);
+  mGameOverText.setVisible(false);
 }
 
 void IngameState::update(unsigned long dt)
 {
+  // skip logical updates if the game has ended.
+  if (mGameOverText.isVisible()) {
+    return;
+  }
+
   mFooterLine.update(dt);
   mAvatar.update(dt);
   mAvatarLaser.update(dt);
 
-  // decrement the relaunch timer if it has been activated.
+  // decrement the relaunch timer if it has been activated or handle destruction state.
   auto& ctx = mGame.getActivePlayerContext();
   auto relaunchTimer = ctx.getRelaunchTimer();
   if (relaunchTimer > 0) {
     relaunchTimer--;
     ctx.setRelaunchTimer(relaunchTimer);
     return;
+  } else if (mAvatar.isEnabled() == false) {
+    const auto playerCount = mGame.getPlayerCount();
+    if (playerCount == 1) {
+      // ::: SINGLE PLAYER :::
+      // check whether it's time to end the game or just reset the avatar.
+      if (ctx.getLives() <= 0) {
+        // check and update the hi-score if necessary.
+        const auto score = ctx.getScore();
+        if (mGame.getHiScore() < score) {
+          mGame.setHiScore(score);
+        }
+        mGameOverText.setVisible(true);
+        return;
+      } else {
+        // refresh the amount of lifes indicators.
+        const auto lives = ctx.getLives();
+        mLifesText.setText(std::to_string(lives));
+        if (lives == 2) {
+          mLifeSprite2.setVisible(false);
+          mLifeSprite1.setVisible(true);
+        } else if (lives == 1) {
+          mLifeSprite2.setVisible(false);
+          mLifeSprite1.setVisible(false);
+        }
+
+        // reset the avatar state.
+        mAvatar.reset();
+      }
+    } else {
+      // ::: MULTI-PLAYER :::
+      // store the current state of the player into the player context.
+      ctx.setAliens(mAliens);
+      // TODO store shields.
+
+      // perform additional actions based on the currently active player.
+      const auto activePlayer = mGame.getActivePlayer();
+      if (activePlayer == Game::Player::PLAYER_1) {
+        // player one was playing so we can now switch to next player.
+        mGame.setActivePlayer(Game::Player::PLAYER_2);
+        auto state = std::make_shared<PlayPlayerState>(mGame);
+        auto scene = mGame.getScene();
+        scene->setState(state);
+      } else {
+        // player two was playing so we should now check whether to end the game.
+        auto& player1Ctx = mGame.getPlayerContext1();
+        auto& player2Ctx = mGame.getPlayerContext2();
+        if (player2Ctx.getLives() <= 0) {
+          // check and update player1 the hi-score if necessary.
+          const auto player1Score = player1Ctx.getScore();
+          if (mGame.getHiScore() < player1Score) {
+            mGame.setHiScore(player1Score);
+          }
+
+          // check and update player2 the hi-score if necessary.
+          const auto player2Score = player2Ctx.getScore();
+          if (mGame.getHiScore() < player2Score) {
+            mGame.setHiScore(player2Score);
+          }
+
+          // show the game over text and also the score for the 1st player.
+          mGameOverText.setVisible(true);
+          // view the player 1 score.
+          return;
+        } else {
+          // was not the last life, so we can just switch to next player.
+          mGame.setActivePlayer(Game::Player::PLAYER_1);
+          auto state = std::make_shared<PlayPlayerState>(mGame);
+          auto scene = mGame.getScene();
+          scene->setState(state);
+        }
+      }
+    }
   }
 
   // check that the avatar cannot go out-of-bounds from the scene boundaries.
@@ -202,6 +287,7 @@ void IngameState::update(unsigned long dt)
 
 void IngameState::render(SDL_Renderer& renderer)
 {
+  mGameOverText.render(renderer);
   mFooterLine.render(renderer);
   mAvatar.render(renderer);
   mAvatarLaser.render(renderer);

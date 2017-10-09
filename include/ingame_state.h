@@ -59,6 +59,7 @@ namespace space_invaders
     std::vector<AlienPtr> mAliens;
     CollideableEntity     mAlienLeftDirector;
     CollideableEntity     mAlienRightDirector;
+    TextEntity            mGameOverText;
   }; 
 }
 
