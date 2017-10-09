@@ -65,6 +65,9 @@ namespace space_invaders
     int getPlayerCount() const            { return mPlayerCount;        }
     void setPlayerCount(int playerCount)  { mPlayerCount = playerCount; }
 
+    int getHiScore() const { return mHiScore; }
+    void setHiScore(int score) { mHiScore = score; }
+
           SDL_Window* getWindow()       { return mWindow; }
     const SDL_Window* getWindow() const { return mWindow; }
 
@@ -96,6 +99,7 @@ namespace space_invaders
     ImagePtr      mSpriteSheet;
     int           mPlayerCount;
     Player        mActivePlayer;
+    int           mHiScore;
     std::shared_ptr<PlayerContext> mPlayerContext1;
     std::shared_ptr<PlayerContext> mPlayerContext2;
   };

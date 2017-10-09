@@ -27,6 +27,7 @@ Game::Game(int width, int height) : mState(State::NOT_INITED),
   mSpriteSheet(nullptr),
   mPlayerCount(1),
   mActivePlayer(Player::PLAYER_1),
+  mHiScore(0),
   mPlayerContext1(std::make_shared<PlayerContext>()),
   mPlayerContext2(std::make_shared<PlayerContext>())
 {
