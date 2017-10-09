@@ -153,9 +153,7 @@ void IngameState::update(unsigned long dt)
       if (activePlayer == Game::Player::PLAYER_1) {
         // player one was playing so we can now switch to next player.
         mGame.setActivePlayer(Game::Player::PLAYER_2);
-        auto state = std::make_shared<PlayPlayerState>(mGame);
-        auto scene = mGame.getScene();
-        scene->setState(state);
+        return;
       } else {
         // player two was playing so we should now check whether to end the game.
         auto& player1Ctx = mGame.getPlayerContext1();
@@ -180,9 +178,7 @@ void IngameState::update(unsigned long dt)
         } else {
           // was not the last life, so we can just switch to next player.
           mGame.setActivePlayer(Game::Player::PLAYER_1);
-          auto state = std::make_shared<PlayPlayerState>(mGame);
-          auto scene = mGame.getScene();
-          scene->setState(state);
+          return;
         }
       }
     }
