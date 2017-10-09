@@ -65,6 +65,10 @@ void Scene::update(unsigned long dt)
   mScore1Text->setText(toScoreString(ctx1.getScore()));
   mScore2Text->setText(toScoreString(ctx2.getScore()));
 
+  // ensure that the hi-score is up-to-date.
+  const auto hiScore = mGame.getHiScore();
+  mHiScoreText->setText(toScoreString(hiScore));
+
   mScore1Caption->update(dt);
   mHiScoreCaption->update(dt);
   mScore2Caption->update(dt);
