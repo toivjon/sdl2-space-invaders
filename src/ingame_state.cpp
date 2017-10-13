@@ -18,7 +18,8 @@ IngameState::IngameState(Game& game)
     mLifeSprite2(game),
     mAlienLeftDirector(game),
     mAlienRightDirector(game),
-    mGameOverText(game)
+    mGameOverText(game),
+    mFlyingSaucer(game)
 {
   // initialoize the green static footer line at the bottom of the screen.
   mFooterLine.setImage(game.getSpriteSheet());
@@ -106,6 +107,7 @@ void IngameState::update(unsigned long dt)
   mFooterLine.update(dt);
   mAvatar.update(dt);
   mAvatarLaser.update(dt);
+  mFlyingSaucer.update(dt);
 
   // decrement the relaunch timer if it has been activated or handle destruction state.
   auto& ctx = mGame.getActivePlayerContext();
@@ -255,6 +257,19 @@ void IngameState::update(unsigned long dt)
     if (mAvatarLaser.collides(mTopOobDetector)) {
       mAvatarLaser.setCurrentAnimation("top-wall-hit");
       mAvatarLaser.explode();
+    } else if (mAvatarLaser.collides(mFlyingSaucer)) {
+      // hide the avatar laser shot.
+      mAvatarLaser.setDirectionY(0);
+      mAvatarLaser.setEnabled(false);
+      mAvatarLaser.setVisible(false);
+
+      // change the flying saucer to perform explosion.
+      mFlyingSaucer.explode();
+
+      // add points for the player based on the shot count.
+      auto& ctx = mGame.getActivePlayerContext();
+      auto points = mFlyingSaucer.getPoints();
+      ctx.addScore(points);
     } else {
       for (auto& alien : mAliens) {
         if (mAvatarLaser.collides(*alien)) {
@@ -281,6 +296,31 @@ void IngameState::update(unsigned long dt)
       }
     }
   }
+
+  // create an flying saucer or an alien squiggly missile if it is ready to be fired.
+  if (mAvatar.isEnabled() && mFlyingSaucer.isVisible() == false) {
+    // check whether it is time to launch the flying saucer.
+    if (mFlyingSaucer.getAppearingCounter() <= 0 && activeAlienCount >= 8) {
+      mFlyingSaucer.launch();
+    } else {
+      // TODO ... handle alien squiggly shot here ....
+    }
+  }
+
+  // hide the flying saucer if it has travelled all across the screen.
+  if (mFlyingSaucer.isVisible()) {
+    if (mFlyingSaucer.getDirectionX() > 0.f) {
+      if (mRightOobDetector.collides(mFlyingSaucer)) {
+        mFlyingSaucer.setEnabled(false);
+        mFlyingSaucer.setVisible(false);
+      }
+    } else {
+      if (mLeftOobDetector.collides(mFlyingSaucer)) {
+        mFlyingSaucer.setEnabled(false);
+        mFlyingSaucer.setVisible(false);
+      }
+    }
+  }
 }
 
 void IngameState::render(SDL_Renderer& renderer)
@@ -289,6 +329,7 @@ void IngameState::render(SDL_Renderer& renderer)
   mFooterLine.render(renderer);
   mAvatar.render(renderer);
   mAvatarLaser.render(renderer);
+  mFlyingSaucer.render(renderer);
   mLifesText.render(renderer);
   mLifeSprite1.render(renderer);
   mLifeSprite2.render(renderer);

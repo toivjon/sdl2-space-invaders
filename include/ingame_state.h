@@ -13,6 +13,7 @@
 #include "state.h"
 #include "text_entity.h"
 #include "alien.h"
+#include "flying_saucer.h"
 
 #include <vector>
 
@@ -60,6 +61,7 @@ namespace space_invaders
     CollideableEntity     mAlienLeftDirector;
     CollideableEntity     mAlienRightDirector;
     TextEntity            mGameOverText;
+    FlyingSaucer          mFlyingSaucer;
   }; 
 }
 
