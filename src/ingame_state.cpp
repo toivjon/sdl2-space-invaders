@@ -337,6 +337,7 @@ void IngameState::update(unsigned long dt)
       // explode at the collision.
       mRollingShot.setEnabled(false);
       mRollingShot.setVisible(false);
+      mAvatarLaser.setCurrentAnimation("alien-laser-hit");
       mAvatarLaser.explode();
     } else {
       // TODO handle collisions with the shields.
@@ -357,6 +358,7 @@ void IngameState::update(unsigned long dt)
       // explode at the collision.
       mPlungerShot.setEnabled(false);
       mPlungerShot.setVisible(false);
+      mAvatarLaser.setCurrentAnimation("alien-laser-hit");
       mAvatarLaser.explode();
     } else {
       // TODO handle collisions with the shields.
@@ -377,6 +379,7 @@ void IngameState::update(unsigned long dt)
       // explode at the collision.
       mSquigglyShot.setEnabled(false);
       mSquigglyShot.setVisible(false);
+      mAvatarLaser.setCurrentAnimation("alien-laser-hit");
       mAvatarLaser.explode();
     } else {
       // TODO handle collisions with the shields.
