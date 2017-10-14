@@ -16,6 +16,7 @@
 #include "flying_saucer.h"
 #include "plunger_shot.h"
 #include "squiggly_shot.h"
+#include "rolling_shot.h"
 
 #include <vector>
 
@@ -52,11 +53,16 @@ namespace space_invaders
 
     const std::vector<AlienPtr>& getAliens() const { return mAliens; }
 
+    const Avatar& getAvatar() const { return mAvatar; }
+
     const PlungerShot& getPlungerShot() const { return mPlungerShot; }
           PlungerShot& getPlungerShot()       { return mPlungerShot; }
 
     const SquigglyShot& getSquigglyShot() const { return mSquigglyShot; }
           SquigglyShot& getSquigglyShot()       { return mSquigglyShot; }
+
+    const RollingShot& getRollingShot() const { return mRollingShot; }
+          RollingShot& getRollingShot()       { return mRollingShot; }
   private:
     DrawableEntity        mFooterLine;
     Avatar                mAvatar;
@@ -74,6 +80,7 @@ namespace space_invaders
     FlyingSaucer          mFlyingSaucer;
     PlungerShot           mPlungerShot;
     SquigglyShot          mSquigglyShot;
+    RollingShot           mRollingShot;
   }; 
 }
 

@@ -1,6 +1,7 @@
 #include "alien_shot.h"
 #include "game.h"
 #include "player_context.h"
+#include "ingame_state.h"
 
 using namespace space_invaders;
 
@@ -44,14 +45,19 @@ bool AlienShot::isReadyToBeFired() const
   // resolve the current reload rate for the aliens.
   const auto reloadRate = getReloadRate();
   
+  // get a reference to each alien shot within the state.
+  const auto& rollingShot = mState.getRollingShot();
+  const auto& plungerShot = mState.getPlungerShot();
+  const auto& squigglyShot = mState.getSquigglyShot();
+
   // check whether it's too soon to fire again.
-  /*
-  if (shot1.mProgressTicks > 0 && reloadRate >= shot1.mProgressTicks) {
+  if (this != &rollingShot && rollingShot.mProgressTicks > 0 && reloadRate >= rollingShot.mProgressTicks) {
     return false;
-  } else if (shot2.mProgressTicks > 0 && reloadRate >= shot2.mProgressTicks) {
+  } else if (this != &plungerShot && plungerShot.mProgressTicks > 0 && reloadRate >= plungerShot.mProgressTicks) {
+    return false;
+  } else if (this != &squigglyShot && squigglyShot.mProgressTicks > 0 && reloadRate >= squigglyShot.mProgressTicks) {
     return false;
   }
-  */
 
   // it seems that it's ok to fire again.
   return true;

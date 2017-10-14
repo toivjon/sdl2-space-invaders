@@ -21,7 +21,8 @@ IngameState::IngameState(Game& game)
     mGameOverText(game),
     mFlyingSaucer(game),
     mPlungerShot(game, *this),
-    mSquigglyShot(game, *this)
+    mSquigglyShot(game, *this),
+    mRollingShot(game, *this)
 {
   // initialoize the green static footer line at the bottom of the screen.
   mFooterLine.setImage(game.getSpriteSheet());
@@ -112,6 +113,7 @@ void IngameState::update(unsigned long dt)
   mFlyingSaucer.update(dt);
   mPlungerShot.update(dt);
   mSquigglyShot.update(dt);
+  mRollingShot.update(dt);
 
   // decrement the relaunch timer if it has been activated or handle destruction state.
   auto& ctx = mGame.getActivePlayerContext();
@@ -301,6 +303,11 @@ void IngameState::update(unsigned long dt)
     }
   }
 
+  // create the rolling missile if it's being ready.
+  if (mAvatar.isEnabled() && mRollingShot.isReadyToBeFired() && mRollingShot.getLock() <= 0) {
+    mRollingShot.fire();
+  }
+
   // create an alien plunger missile if there is more than one alien and if its being reloaded.
   if (mAvatar.isEnabled() && activeAlienCount > 1 && mPlungerShot.isReadyToBeFired()) {
     mPlungerShot.fire();
@@ -313,6 +320,26 @@ void IngameState::update(unsigned long dt)
       mFlyingSaucer.launch();
     } else {
       mSquigglyShot.fire();
+    }
+  }
+
+  // check whether the rolling shot hits something.
+  if (mRollingShot.isVisible()) {
+    if (mRollingShot.collides(mAvatar)) {
+      // hide the shot and explode the avatar.
+      mRollingShot.setEnabled(false);
+      mRollingShot.setVisible(false);
+      mAvatar.explode();
+    } else if (mRollingShot.collides(mFooterLine)) {
+      // explode at the footer.
+      mRollingShot.explode();
+    } else if (mRollingShot.collides(mAvatarLaser)) {
+      // explode at the collision.
+      mRollingShot.setEnabled(false);
+      mRollingShot.setVisible(false);
+      mAvatarLaser.explode();
+    } else {
+      // TODO handle collisions with the shields.
     }
   }
 
@@ -387,6 +414,7 @@ void IngameState::render(SDL_Renderer& renderer)
   }
   mPlungerShot.render(renderer);
   mSquigglyShot.render(renderer);
+  mRollingShot.render(renderer);
 }
 
 void IngameState::onEnter()
