@@ -20,7 +20,8 @@ IngameState::IngameState(Game& game)
     mAlienRightDirector(game),
     mGameOverText(game),
     mFlyingSaucer(game),
-    mPlungerShot(game, *this)
+    mPlungerShot(game, *this),
+    mSquigglyShot(game, *this)
 {
   // initialoize the green static footer line at the bottom of the screen.
   mFooterLine.setImage(game.getSpriteSheet());
@@ -110,6 +111,7 @@ void IngameState::update(unsigned long dt)
   mAvatarLaser.update(dt);
   mFlyingSaucer.update(dt);
   mPlungerShot.update(dt);
+  mSquigglyShot.update(dt);
 
   // decrement the relaunch timer if it has been activated or handle destruction state.
   auto& ctx = mGame.getActivePlayerContext();
@@ -300,8 +302,18 @@ void IngameState::update(unsigned long dt)
   }
 
   // create an alien plunger missile if there is more than one alien and if its being reloaded.
-  if (activeAlienCount > 1 && mAvatar.isEnabled() && mPlungerShot.isReadyToBeFired()) {
+  if (mAvatar.isEnabled() && activeAlienCount > 1 && mPlungerShot.isReadyToBeFired()) {
     mPlungerShot.fire();
+  }
+
+  // create an alien squiggly missile or the flying saucer if either is currently desired.
+  if (mAvatar.isEnabled() && mSquigglyShot.isReadyToBeFired() && !mFlyingSaucer.isVisible()) {
+    // check whether it is time to launch the flying saucer.
+    if (mFlyingSaucer.getAppearingCounter() <= 0 && activeAlienCount >= 8) {
+      mFlyingSaucer.launch();
+    } else {
+      mSquigglyShot.fire();
+    }
   }
 
   // check whether the plunger shot hits something.
@@ -324,13 +336,23 @@ void IngameState::update(unsigned long dt)
     }
   }
 
-  // create an flying saucer or an alien squiggly missile if it is ready to be fired.
-  if (mAvatar.isEnabled() && mFlyingSaucer.isVisible() == false) {
-    // check whether it is time to launch the flying saucer.
-    if (mFlyingSaucer.getAppearingCounter() <= 0 && activeAlienCount >= 8) {
-      mFlyingSaucer.launch();
+  // check whether the squiggly shot hits something.
+  if (mSquigglyShot.isVisible()) {
+    if (mSquigglyShot.collides(mAvatar)) {
+      // hide the shot and explode the avatar.
+      mSquigglyShot.setEnabled(false);
+      mSquigglyShot.setVisible(false);
+      mAvatar.explode();
+    } else if (mSquigglyShot.collides(mFooterLine)) {
+      // explode at the footer.
+      mSquigglyShot.explode();
+    } else if (mSquigglyShot.collides(mAvatarLaser)) {
+      // explode at the collision.
+      mSquigglyShot.setEnabled(false);
+      mSquigglyShot.setVisible(false);
+      mAvatarLaser.explode();
     } else {
-      // TODO ... handle alien squiggly shot here ....
+      // TODO handle collisions with the shields.
     }
   }
 
@@ -364,6 +386,7 @@ void IngameState::render(SDL_Renderer& renderer)
     alien->render(renderer);
   }
   mPlungerShot.render(renderer);
+  mSquigglyShot.render(renderer);
 }
 
 void IngameState::onEnter()
