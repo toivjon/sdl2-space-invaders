@@ -39,21 +39,20 @@ void RollingShot::fire()
   const auto& aliens = mState.getAliens();
 
   // resolve the nearest active alien from the list.
-  const auto avatarX = avatar.getX();
+  const auto avatarX = avatar.getCenterX();
   auto alienIdx = -1;
   auto prevDistance = -1;
   for (auto col = 0; col < 11; col++) {
     auto distance = std::abs(aliens[col]->getCenterX() - avatarX);
     if (prevDistance != -1 && distance > prevDistance) {
       break;
-    } else {
-      for (auto row = 4; row >= 0; row--) {
-        auto idx = (row * 11) + col;
-        if (aliens[col]->isVisible()) {
-          alienIdx = idx;
-          prevDistance = distance;
-          break;
-        }
+    }
+    for (auto row = 4; row >= 0; row--) {
+      auto idx = (row * 11) + col;
+      if (aliens[idx]->isVisible()) {
+        alienIdx = idx;
+        prevDistance = distance;
+        break;
       }
     }
   }
