@@ -14,6 +14,7 @@
 #include "text_entity.h"
 #include "alien.h"
 #include "flying_saucer.h"
+#include "plunger_shot.h"
 
 #include <vector>
 
@@ -47,6 +48,11 @@ namespace space_invaders
 
     void onKeyUp(SDL_KeyboardEvent& event);
     void onKeyDown(SDL_KeyboardEvent& event);
+
+    const std::vector<AlienPtr>& getAliens() const { return mAliens; }
+
+    const PlungerShot& getPlungerShot() const { return mPlungerShot; }
+          PlungerShot& getPlungerShot()       { return mPlungerShot; }
   private:
     DrawableEntity        mFooterLine;
     Avatar                mAvatar;
@@ -62,6 +68,7 @@ namespace space_invaders
     CollideableEntity     mAlienRightDirector;
     TextEntity            mGameOverText;
     FlyingSaucer          mFlyingSaucer;
+    PlungerShot           mPlungerShot;
   }; 
 }
 

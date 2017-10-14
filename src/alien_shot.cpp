@@ -4,7 +4,7 @@
 
 using namespace space_invaders;
 
-AlienShot::AlienShot(Game& game) : AnimatedEntity(game), mProgressTicks(0)
+AlienShot::AlienShot(Game& game, IngameState& state) : AnimatedEntity(game), mState(state), mProgressTicks(0)
 {
   // ...
 }
@@ -34,7 +34,7 @@ void AlienShot::explode()
   setDirectionY(0.f);
 }
 
-bool AlienShot::isReadyToBeFired(const AlienShot& shot1, const AlienShot& shot2) const
+bool AlienShot::isReadyToBeFired() const
 {
   // shot cannot be re-fired while in progress.
   if (isVisible() == true) {
@@ -45,11 +45,13 @@ bool AlienShot::isReadyToBeFired(const AlienShot& shot1, const AlienShot& shot2)
   const auto reloadRate = getReloadRate();
   
   // check whether it's too soon to fire again.
+  /*
   if (shot1.mProgressTicks > 0 && reloadRate >= shot1.mProgressTicks) {
     return false;
   } else if (shot2.mProgressTicks > 0 && reloadRate >= shot2.mProgressTicks) {
     return false;
   }
+  */
 
   // it seems that it's ok to fire again.
   return true;

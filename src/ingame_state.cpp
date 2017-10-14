@@ -19,7 +19,8 @@ IngameState::IngameState(Game& game)
     mAlienLeftDirector(game),
     mAlienRightDirector(game),
     mGameOverText(game),
-    mFlyingSaucer(game)
+    mFlyingSaucer(game),
+    mPlungerShot(game, *this)
 {
   // initialoize the green static footer line at the bottom of the screen.
   mFooterLine.setImage(game.getSpriteSheet());
@@ -108,6 +109,7 @@ void IngameState::update(unsigned long dt)
   mAvatar.update(dt);
   mAvatarLaser.update(dt);
   mFlyingSaucer.update(dt);
+  mPlungerShot.update(dt);
 
   // decrement the relaunch timer if it has been activated or handle destruction state.
   auto& ctx = mGame.getActivePlayerContext();
@@ -297,6 +299,31 @@ void IngameState::update(unsigned long dt)
     }
   }
 
+  // create an alien plunger missile if there is more than one alien and if its being reloaded.
+  if (activeAlienCount > 1 && mAvatar.isEnabled() && mPlungerShot.isReadyToBeFired()) {
+    mPlungerShot.fire();
+  }
+
+  // check whether the plunger shot hits something.
+  if (mPlungerShot.isVisible()) {
+    if (mPlungerShot.collides(mAvatar)) {
+      // hide the shot and explode the avatar.
+      mPlungerShot.setEnabled(false);
+      mPlungerShot.setVisible(false);
+      mAvatar.explode();
+    } else if (mPlungerShot.collides(mFooterLine)) {
+      // explode at the footer.
+      mPlungerShot.explode();
+    } else if (mPlungerShot.collides(mAvatarLaser)) {
+      // explode at the collision.
+      mPlungerShot.setEnabled(false);
+      mPlungerShot.setVisible(false);
+      mAvatarLaser.explode();
+    } else {
+      // TODO handle collisions with the shields.
+    }
+  }
+
   // create an flying saucer or an alien squiggly missile if it is ready to be fired.
   if (mAvatar.isEnabled() && mFlyingSaucer.isVisible() == false) {
     // check whether it is time to launch the flying saucer.
@@ -336,6 +363,7 @@ void IngameState::render(SDL_Renderer& renderer)
   for (auto& alien : mAliens) {
     alien->render(renderer);
   }
+  mPlungerShot.render(renderer);
 }
 
 void IngameState::onEnter()

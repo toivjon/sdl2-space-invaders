@@ -27,6 +27,7 @@
 
 namespace space_invaders
 {
+  class IngameState;
   class AlienShot : public AnimatedEntity
   {
   public:
@@ -44,18 +45,19 @@ namespace space_invaders
     // = allowed functions =
     // =====================
 
-    AlienShot(Game& game);
+    AlienShot(Game& game, IngameState& state);
     ~AlienShot() override = default;
 
     void update(unsigned long dt) override;
 
     virtual void fire();
     void explode();
-    bool isReadyToBeFired(const AlienShot& shot1, const AlienShot& shot2) const;
+    bool isReadyToBeFired() const;
 
     int getReloadRate() const;
-  private:
-    int mProgressTicks;
+  protected:
+    IngameState&  mState;
+    int           mProgressTicks;
   };
 }
 
