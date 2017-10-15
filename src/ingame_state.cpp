@@ -320,7 +320,7 @@ void IngameState::update(unsigned long dt)
     } else {
       // explode if the the avatar laser hits a shield.
       for (auto shield : mShields) {
-        if (mAvatarLaser.collides(*shield)) {
+        if (shield->collides(mAvatarLaser)) {
           mAvatarLaser.setCurrentAnimation("alien-laser-hit");
           mAvatarLaser.explode();
           // TODO modify shield?
@@ -394,7 +394,7 @@ void IngameState::update(unsigned long dt)
     } else {
       // explode when a shield is being hit.
       for (auto shield : mShields) {
-        if (mRollingShot.collides(*shield)) {
+        if (shield->collides(mRollingShot)) {
           mRollingShot.explode();
           // TODO modify shield?
           break;
@@ -422,7 +422,7 @@ void IngameState::update(unsigned long dt)
     } else {
       // explode when a shield is being hit.
       for (auto shield : mShields) {
-        if (mPlungerShot.collides(*shield)) {
+        if (shield->collides(mPlungerShot)) {
           mPlungerShot.explode();
           // TODO modify shield?
           break;
@@ -450,7 +450,7 @@ void IngameState::update(unsigned long dt)
     } else {
       // explode when a shield is being hit.
       for (auto shield : mShields) {
-        if (mSquigglyShot.collides(*shield)) {
+        if (shield->collides(mSquigglyShot)) {
           mSquigglyShot.explode();
           // TODO modify shield?
           break;
