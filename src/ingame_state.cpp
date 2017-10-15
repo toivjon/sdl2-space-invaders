@@ -98,6 +98,44 @@ IngameState::IngameState(Game& game)
   mGameOverText.setX(672 / 2 - mGameOverText.getExtentX());
   mGameOverText.setY(135);
   mGameOverText.setVisible(false);
+
+  // get shields from the user context or create them if not yet created.
+  mShields = ctx.getShields();
+  if (mShields.empty()) {
+    // construct the first shield at the left of the screen.
+    auto shield1 = std::make_shared<Shield>(game);
+    shield1->setWidth(66);
+    shield1->setHeight(48);
+    shield1->setX(135 - shield1->getExtentX());
+    shield1->setY(575);
+
+    // construct the second shield at the left of the screen.
+    auto shield2 = std::make_shared<Shield>(game);
+    shield2->setWidth(66);
+    shield2->setHeight(48);
+    shield2->setX(269 - shield2->getExtentX());
+    shield2->setY(575);
+    
+    // construct the third shield at the left of the screen.
+    auto shield3 = std::make_shared<Shield>(game);
+    shield3->setWidth(66);
+    shield3->setHeight(48);
+    shield3->setX(403 - shield3->getExtentX());
+    shield3->setY(575);
+
+    // construct the fourth shield at the left of the screen.
+    auto shield4 = std::make_shared<Shield>(game);
+    shield4->setWidth(66);
+    shield4->setHeight(48);
+    shield4->setX(537 - shield4->getExtentX());
+    shield4->setY(575);
+
+    // add all shields into the shield list.
+    mShields.push_back(shield1);
+    mShields.push_back(shield2);
+    mShields.push_back(shield3);
+    mShields.push_back(shield4);
+  }
 }
 
 void IngameState::update(unsigned long dt)
@@ -114,6 +152,9 @@ void IngameState::update(unsigned long dt)
   mPlungerShot.update(dt);
   mSquigglyShot.update(dt);
   mRollingShot.update(dt);
+  for (auto shield : mShields) {
+    shield->update(dt);
+  }
 
   // decrement the relaunch timer if it has been activated or handle destruction state.
   auto& ctx = mGame.getActivePlayerContext();
@@ -154,7 +195,7 @@ void IngameState::update(unsigned long dt)
       // ::: MULTI-PLAYER :::
       // store the current state of the player into the player context.
       ctx.setAliens(mAliens);
-      // TODO store shields.
+      ctx.setShields(mShields);
 
       // perform additional actions based on the currently active player.
       const auto activePlayer = mGame.getActivePlayer();
@@ -277,6 +318,17 @@ void IngameState::update(unsigned long dt)
       auto points = mFlyingSaucer.getPoints();
       ctx.addScore(points);
     } else {
+      // explode if the the avatar laser hits a shield.
+      for (auto shield : mShields) {
+        if (mAvatarLaser.collides(*shield)) {
+          mAvatarLaser.setCurrentAnimation("alien-laser-hit");
+          mAvatarLaser.explode();
+          // TODO modify shield?
+          break;
+        }
+      }
+
+      // check whether the avatar laser hits any of the aliens.
       for (auto& alien : mAliens) {
         if (mAvatarLaser.collides(*alien)) {
           // create an alien laser to explode at the alien position.
@@ -340,7 +392,14 @@ void IngameState::update(unsigned long dt)
       mAvatarLaser.setCurrentAnimation("alien-laser-hit");
       mAvatarLaser.explode();
     } else {
-      // TODO handle collisions with the shields.
+      // explode when a shield is being hit.
+      for (auto shield : mShields) {
+        if (mRollingShot.collides(*shield)) {
+          mRollingShot.explode();
+          // TODO modify shield?
+          break;
+        }
+      }
     }
   }
 
@@ -361,7 +420,14 @@ void IngameState::update(unsigned long dt)
       mAvatarLaser.setCurrentAnimation("alien-laser-hit");
       mAvatarLaser.explode();
     } else {
-      // TODO handle collisions with the shields.
+      // explode when a shield is being hit.
+      for (auto shield : mShields) {
+        if (mPlungerShot.collides(*shield)) {
+          mPlungerShot.explode();
+          // TODO modify shield?
+          break;
+        }
+      }
     }
   }
 
@@ -382,7 +448,14 @@ void IngameState::update(unsigned long dt)
       mAvatarLaser.setCurrentAnimation("alien-laser-hit");
       mAvatarLaser.explode();
     } else {
-      // TODO handle collisions with the shields.
+      // explode when a shield is being hit.
+      for (auto shield : mShields) {
+        if (mSquigglyShot.collides(*shield)) {
+          mSquigglyShot.explode();
+          // TODO modify shield?
+          break;
+        }
+      }
     }
   }
 
@@ -414,6 +487,9 @@ void IngameState::render(SDL_Renderer& renderer)
   mLifeSprite2.render(renderer);
   for (auto& alien : mAliens) {
     alien->render(renderer);
+  }
+  for (auto shield : mShields) {
+    shield->render(renderer);
   }
   mPlungerShot.render(renderer);
   mSquigglyShot.render(renderer);

@@ -17,6 +17,7 @@
 #include "plunger_shot.h"
 #include "squiggly_shot.h"
 #include "rolling_shot.h"
+#include "shield.h"
 
 #include <vector>
 
@@ -64,23 +65,24 @@ namespace space_invaders
     const RollingShot& getRollingShot() const { return mRollingShot; }
           RollingShot& getRollingShot()       { return mRollingShot; }
   private:
-    DrawableEntity        mFooterLine;
-    Avatar                mAvatar;
-    CollideableEntity     mLeftOobDetector;
-    CollideableEntity     mRightOobDetector;
-    CollideableEntity     mTopOobDetector;
-    AvatarLaser           mAvatarLaser;
-    TextEntity            mLifesText;
-    DrawableEntity        mLifeSprite1;
-    DrawableEntity        mLifeSprite2;
-    std::vector<AlienPtr> mAliens;
-    CollideableEntity     mAlienLeftDirector;
-    CollideableEntity     mAlienRightDirector;
-    TextEntity            mGameOverText;
-    FlyingSaucer          mFlyingSaucer;
-    PlungerShot           mPlungerShot;
-    SquigglyShot          mSquigglyShot;
-    RollingShot           mRollingShot;
+    DrawableEntity          mFooterLine;
+    Avatar                  mAvatar;
+    CollideableEntity       mLeftOobDetector;
+    CollideableEntity       mRightOobDetector;
+    CollideableEntity       mTopOobDetector;
+    AvatarLaser             mAvatarLaser;
+    TextEntity              mLifesText;
+    DrawableEntity          mLifeSprite1;
+    DrawableEntity          mLifeSprite2;
+    std::vector<AlienPtr>   mAliens;
+    CollideableEntity       mAlienLeftDirector;
+    CollideableEntity       mAlienRightDirector;
+    TextEntity              mGameOverText;
+    FlyingSaucer            mFlyingSaucer;
+    PlungerShot             mPlungerShot;
+    SquigglyShot            mSquigglyShot;
+    RollingShot             mRollingShot;
+    std::vector<ShieldPtr>  mShields;
   }; 
 }
 

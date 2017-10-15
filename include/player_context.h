@@ -10,6 +10,7 @@
 #define SPACE_INVADER_PLAYER_CONTEXT_H
 
 #include "alien.h"
+#include "shield.h"
 
 #include <vector>
 
@@ -41,6 +42,7 @@ namespace space_invaders
     void setShotCount(int count) { mShotCount = count; }
     void setRelaunchTimer(int timer) { mRelaunchTimer = timer; }
     void setAliens(const std::vector<AlienPtr>& aliens) { mAliens = aliens; }
+    void setShields(const std::vector<ShieldPtr>& shields) { mShields = shields; }
 
     int getLevel() const { return mLevel; }
     int getScore() const { return mScore; }
@@ -48,6 +50,7 @@ namespace space_invaders
     int getShotCount() const { return mShotCount; }
     int getRelaunchTimer() const { return mRelaunchTimer; }
     const std::vector<AlienPtr>& getAliens() const { return mAliens; }
+    const std::vector<ShieldPtr>& getShields() const { return mShields; }
   private:
     int mLevel;
     int mScore;
@@ -55,7 +58,7 @@ namespace space_invaders
     int mShotCount;
     int mRelaunchTimer;
     std::vector<AlienPtr> mAliens;
-    // TODO shield states.
+    std::vector<ShieldPtr> mShields;
   };
 }
 
