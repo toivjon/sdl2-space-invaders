@@ -47,6 +47,9 @@ namespace space_invaders
     ~Shield() override = default;
 
     bool collides(CollideableEntity& entity) const;
+
+    bool hasVisiblePixel(const DrawableEntity& entity, int x, int y) const;
+    bool hasVisiblePixel(void* pixels, int pitch, int x, int y) const;
   };
   typedef std::shared_ptr<Shield> ShieldPtr;
 }

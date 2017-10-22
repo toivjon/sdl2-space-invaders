@@ -41,7 +41,7 @@ namespace space_invaders
     void setWidth(int width) override;
     void setHeight(int height) override;
 
-    virtual bool collides(const CollideableEntity& entity) const;
+    virtual bool collides(CollideableEntity& entity) const;
     bool contains(int x, int y) const;
 
     SDL_Rect intersection(const CollideableEntity& entity) const;

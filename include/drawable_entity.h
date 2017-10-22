@@ -43,6 +43,8 @@ namespace space_invaders
 
     bool isVisible() const { return mVisible; }
 
+    SDL_Rect normalize(const SDL_Rect& rect) const;
+
           ImagePtr getImage()       { return mImage; }
     const ImagePtr getImage() const { return mImage; }
 

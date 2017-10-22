@@ -321,9 +321,7 @@ void IngameState::update(unsigned long dt)
       // explode if the the avatar laser hits a shield.
       for (auto shield : mShields) {
         if (shield->collides(mAvatarLaser)) {
-          mAvatarLaser.setCurrentAnimation("alien-laser-hit");
           mAvatarLaser.explode();
-          // TODO modify shield?
           break;
         }
       }
@@ -389,14 +387,13 @@ void IngameState::update(unsigned long dt)
       // explode at the collision.
       mRollingShot.setEnabled(false);
       mRollingShot.setVisible(false);
-      mAvatarLaser.setCurrentAnimation("alien-laser-hit");
+      mAvatarLaser.setCurrentAnimation("explode");
       mAvatarLaser.explode();
     } else {
       // explode when a shield is being hit.
       for (auto shield : mShields) {
         if (shield->collides(mRollingShot)) {
           mRollingShot.explode();
-          // TODO modify shield?
           break;
         }
       }
@@ -417,14 +414,13 @@ void IngameState::update(unsigned long dt)
       // explode at the collision.
       mPlungerShot.setEnabled(false);
       mPlungerShot.setVisible(false);
-      mAvatarLaser.setCurrentAnimation("alien-laser-hit");
+      mAvatarLaser.setCurrentAnimation("explode");
       mAvatarLaser.explode();
     } else {
       // explode when a shield is being hit.
       for (auto shield : mShields) {
         if (shield->collides(mPlungerShot)) {
           mPlungerShot.explode();
-          // TODO modify shield?
           break;
         }
       }
@@ -445,14 +441,13 @@ void IngameState::update(unsigned long dt)
       // explode at the collision.
       mSquigglyShot.setEnabled(false);
       mSquigglyShot.setVisible(false);
-      mAvatarLaser.setCurrentAnimation("alien-laser-hit");
+      mAvatarLaser.setCurrentAnimation("explode");
       mAvatarLaser.explode();
     } else {
       // explode when a shield is being hit.
       for (auto shield : mShields) {
         if (shield->collides(mSquigglyShot)) {
           mSquigglyShot.explode();
-          // TODO modify shield?
           break;
         }
       }
@@ -480,7 +475,6 @@ void IngameState::render(SDL_Renderer& renderer)
   mGameOverText.render(renderer);
   mFooterLine.render(renderer);
   mAvatar.render(renderer);
-  mAvatarLaser.render(renderer);
   mFlyingSaucer.render(renderer);
   mLifesText.render(renderer);
   mLifeSprite1.render(renderer);
@@ -491,6 +485,7 @@ void IngameState::render(SDL_Renderer& renderer)
   for (auto shield : mShields) {
     shield->render(renderer);
   }
+  mAvatarLaser.render(renderer);
   mPlungerShot.render(renderer);
   mSquigglyShot.render(renderer);
   mRollingShot.render(renderer);

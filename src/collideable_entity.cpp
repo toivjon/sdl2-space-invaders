@@ -73,7 +73,7 @@ void CollideableEntity::setY(int y)
   mCenterY = this->getY() + mExtentY;
 }
 
-bool CollideableEntity::collides(const CollideableEntity& entity) const
+bool CollideableEntity::collides(CollideableEntity& entity) const
 {
   // no collision if either entity is currently not enabled.
   if (!this->isEnabled() || !entity.isEnabled()) return false;

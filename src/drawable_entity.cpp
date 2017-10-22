@@ -65,3 +65,13 @@ void DrawableEntity::setDisappearCountdown(int timer)
 {
   mDisappearCountdown = std::max(0, timer);
 }
+
+SDL_Rect DrawableEntity::normalize(const SDL_Rect& rect) const
+{
+  SDL_Rect normalizedRect;
+  normalizedRect.x = rect.x - getX() + mClip.x;
+  normalizedRect.y = rect.y - getY() + mClip.y;
+  normalizedRect.w = rect.w;
+  normalizedRect.h = rect.h;
+  return normalizedRect;
+}

@@ -9,7 +9,7 @@ AvatarLaser::AvatarLaser(Game& game) : AnimatedEntity(game)
   addAnimationFrame("normal", { 80, 36, 6, 9 });
   addAnimationFrame("top-wall-hit", { 131, 5, 39, 24 });
   addAnimationFrame("alien-hit", { 175, 5, 39, 24 });
-  addAnimationFrame("alien-laser-hit", { 251, 37, 24, 24 });
+  addAnimationFrame("explode", { 251, 37, 24, 24 });
   setCurrentAnimation("normal");
   setX(0);
   setY(0);
