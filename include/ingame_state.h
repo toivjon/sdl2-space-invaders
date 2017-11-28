@@ -78,6 +78,7 @@ namespace space_invaders
     CollideableEntity       mAlienLeftDirector;
     CollideableEntity       mAlienRightDirector;
     TextEntity              mGameOverText;
+    TextEntity              mGameOverInstructions;
     FlyingSaucer            mFlyingSaucer;
     PlungerShot             mPlungerShot;
     SquigglyShot            mSquigglyShot;

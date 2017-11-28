@@ -2,6 +2,7 @@
 #include "game.h"
 #include "player_context.h"
 #include "play_player_state.h"
+#include "welcome_state.h"
 
 using namespace space_invaders;
 
@@ -19,6 +20,7 @@ IngameState::IngameState(Game& game)
     mAlienLeftDirector(game),
     mAlienRightDirector(game),
     mGameOverText(game),
+    mGameOverInstructions(game),
     mFlyingSaucer(game),
     mPlungerShot(game, *this),
     mSquigglyShot(game, *this),
@@ -99,6 +101,12 @@ IngameState::IngameState(Game& game)
   mGameOverText.setY(135);
   mGameOverText.setVisible(false);
 
+  mGameOverInstructions.setText("PRESS ENTER TO CONTINUE");
+  mGameOverInstructions.setColor({245, 3, 5, 255 });
+  mGameOverInstructions.setX(672 / 2 - mGameOverInstructions.getExtentX());
+  mGameOverInstructions.setY(mGameOverText.getY() + 40);
+  mGameOverInstructions.setVisible(false);
+
   // get shields from the user context or create them if not yet created.
   mShields = ctx.getShields();
   if (mShields.empty()) {
@@ -175,6 +183,7 @@ void IngameState::update(unsigned long dt)
           mGame.setHiScore(score);
         }
         mGameOverText.setVisible(true);
+        mGameOverInstructions.setVisible(true);
         return;
       } else {
         // refresh the amount of lifes indicators.
@@ -222,6 +231,7 @@ void IngameState::update(unsigned long dt)
 
           // show the game over text and also the score for the 1st player.
           mGameOverText.setVisible(true);
+          mGameOverInstructions.setVisible(true);
           auto scene = mGame.getScene();
           auto score1 = scene->getScore1Text();
           score1->setVisible(true);
@@ -473,6 +483,7 @@ void IngameState::update(unsigned long dt)
 void IngameState::render(SDL_Renderer& renderer)
 {
   mGameOverText.render(renderer);
+  mGameOverInstructions.render(renderer);
   mFooterLine.render(renderer);
   mAvatar.render(renderer);
   mFlyingSaucer.render(renderer);
@@ -543,6 +554,17 @@ void IngameState::onKeyDown(SDL_KeyboardEvent& event)
   case SDLK_RIGHT:
     if (mAvatar.isEnabled()) {
       mAvatar.setDirectionX(1.f);
+    }
+    break;
+  case SDLK_RETURN:
+    if (mGameOverText.isVisible()) {
+      // reset game context before returning to welcome scene.
+      mGame.getPlayerContext1().reset();
+      mGame.getPlayerContext2().reset();
+
+      // return back to the welcome scene.
+      auto scene = mGame.getScene();
+      scene->setState(std::make_shared<WelcomeState>(mGame));
     }
     break;
   }

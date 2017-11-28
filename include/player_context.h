@@ -34,6 +34,8 @@ namespace space_invaders
 
     PlayerContext();
 
+    void reset();
+
     void addScore(int score) { mScore += score; }
 
     void setLevel(int level) { mLevel = level; }
