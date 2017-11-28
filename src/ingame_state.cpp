@@ -164,6 +164,50 @@ void IngameState::update(unsigned long dt)
     shield->update(dt);
   }
 
+  // hide the flying saucer if it has travelled all across the screen.
+  if (mFlyingSaucer.isVisible()) {
+    if (mFlyingSaucer.getDirectionX() > 0.f) {
+      if (mRightOobDetector.collides(mFlyingSaucer)) {
+        mFlyingSaucer.setEnabled(false);
+        mFlyingSaucer.setVisible(false);
+      }
+    } else {
+      if (mLeftOobDetector.collides(mFlyingSaucer)) {
+        mFlyingSaucer.setEnabled(false);
+        mFlyingSaucer.setVisible(false);
+      }
+    }
+  }
+
+  // ensure that the avatar laser cannot go throught the top OOB.
+  if (mAvatarLaser.isEnabled()) {
+    if (mAvatarLaser.collides(mTopOobDetector)) {
+      mAvatarLaser.setCurrentAnimation("top-wall-hit");
+      mAvatarLaser.explode();
+    }
+  }
+
+  // ensure that the plunger shot cannot go through the footer.
+  if (mPlungerShot.isVisible()) {
+    if (mPlungerShot.collides(mFooterLine)) {
+      mPlungerShot.explode();
+    }
+  }
+
+  // ensure that the squiggly shot cannot go through the footer.
+  if (mSquigglyShot.isVisible()) {
+    if (mSquigglyShot.collides(mFooterLine)) {
+      mSquigglyShot.explode();
+    }
+  }
+
+  // ensure that the rolling shot cannot go through the footer.
+  if (mRollingShot.isVisible()) {
+    if (mRollingShot.collides(mFooterLine)) {
+      mRollingShot.explode();
+    }
+  }
+
   // decrement the relaunch timer if it has been activated or handle destruction state.
   auto& ctx = mGame.getActivePlayerContext();
   auto relaunchTimer = ctx.getRelaunchTimer();
@@ -311,10 +355,7 @@ void IngameState::update(unsigned long dt)
 
   // check whether the avatar laser beam hits something.
   if (mAvatarLaser.isEnabled()) {
-    if (mAvatarLaser.collides(mTopOobDetector)) {
-      mAvatarLaser.setCurrentAnimation("top-wall-hit");
-      mAvatarLaser.explode();
-    } else if (mAvatarLaser.collides(mFlyingSaucer)) {
+    if (mAvatarLaser.collides(mFlyingSaucer)) {
       // hide the avatar laser shot.
       mAvatarLaser.setDirectionY(0);
       mAvatarLaser.setEnabled(false);
@@ -390,9 +431,6 @@ void IngameState::update(unsigned long dt)
       mRollingShot.setEnabled(false);
       mRollingShot.setVisible(false);
       mAvatar.explode();
-    } else if (mRollingShot.collides(mFooterLine)) {
-      // explode at the footer.
-      mRollingShot.explode();
     } else if (mRollingShot.collides(mAvatarLaser)) {
       // explode at the collision.
       mRollingShot.setEnabled(false);
@@ -417,9 +455,6 @@ void IngameState::update(unsigned long dt)
       mPlungerShot.setEnabled(false);
       mPlungerShot.setVisible(false);
       mAvatar.explode();
-    } else if (mPlungerShot.collides(mFooterLine)) {
-      // explode at the footer.
-      mPlungerShot.explode();
     } else if (mPlungerShot.collides(mAvatarLaser)) {
       // explode at the collision.
       mPlungerShot.setEnabled(false);
@@ -444,9 +479,6 @@ void IngameState::update(unsigned long dt)
       mSquigglyShot.setEnabled(false);
       mSquigglyShot.setVisible(false);
       mAvatar.explode();
-    } else if (mSquigglyShot.collides(mFooterLine)) {
-      // explode at the footer.
-      mSquigglyShot.explode();
     } else if (mSquigglyShot.collides(mAvatarLaser)) {
       // explode at the collision.
       mSquigglyShot.setEnabled(false);
@@ -460,21 +492,6 @@ void IngameState::update(unsigned long dt)
           mSquigglyShot.explode();
           break;
         }
-      }
-    }
-  }
-
-  // hide the flying saucer if it has travelled all across the screen.
-  if (mFlyingSaucer.isVisible()) {
-    if (mFlyingSaucer.getDirectionX() > 0.f) {
-      if (mRightOobDetector.collides(mFlyingSaucer)) {
-        mFlyingSaucer.setEnabled(false);
-        mFlyingSaucer.setVisible(false);
-      }
-    } else {
-      if (mLeftOobDetector.collides(mFlyingSaucer)) {
-        mFlyingSaucer.setEnabled(false);
-        mFlyingSaucer.setVisible(false);
       }
     }
   }
