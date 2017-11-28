@@ -11,7 +11,7 @@ Avatar::Avatar(Game& game) : AnimatedEntity(game)
   addAnimationFrame("explosion", { 128, 91, 45, 24 });
   addAnimationFrame("explosion", { 178, 91, 45, 24 });
   setCurrentAnimation("still");
-  setX(getWidth() / 2);
+  setX(45);
   setY(648);
   setVelocity(0.25f);
 }
@@ -36,7 +36,7 @@ void Avatar::explode()
 void Avatar::reset()
 {
   // reset the starting position of the avatar.
-  setX(getWidth() / 2);
+  setX(45);
 
   // set avatar back to collideable and visible.
   setEnabled(true);

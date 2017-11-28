@@ -82,13 +82,13 @@ IngameState::IngameState(Game& game)
     }
   }
 
-  // initialize the left alien director for alien movement direction change.
+  // initialize the left alien director for alien and avatar movement restrictions.
   mAlienLeftDirector.setX(-45);
   mAlienLeftDirector.setY(0);
   mAlienLeftDirector.setExtentX(45);
   mAlienLeftDirector.setExtentY(768 / 2);
 
-  // initialize the right alien director for alien movement direction change.
+  // initialize the right alien director for alien and avatar movement restrictions.
   mAlienRightDirector.setX(672 - 45);
   mAlienRightDirector.setY(0);
   mAlienRightDirector.setExtentX(45);
@@ -245,17 +245,17 @@ void IngameState::update(unsigned long dt)
     }
   }
 
-  // check that the avatar cannot go out-of-bounds from the scene boundaries.
+  // check that the avatar cannot go outside of the alien movement boundaries.
   const auto avatarDirection = mAvatar.getDirectionX();
   if (avatarDirection < 0.f) {
-    if (mLeftOobDetector.collides(mAvatar)) {
+    if (mAlienLeftDirector.collides(mAvatar)) {
       mAvatar.setDirectionX(0.f);
-      mAvatar.setX(mLeftOobDetector.getX() + mLeftOobDetector.getWidth());
+      mAvatar.setX(mAlienLeftDirector.getX() + mAlienLeftDirector.getWidth());
     }
   } else if (avatarDirection > 0.f) {
-    if (mRightOobDetector.collides(mAvatar)) {
+    if (mAlienRightDirector.collides(mAvatar)) {
       mAvatar.setDirectionX(0.f);
-      mAvatar.setX(mRightOobDetector.getX() - mAvatar.getWidth());
+      mAvatar.setX(mAlienRightDirector.getX() - mAvatar.getWidth());
     }
   }
 
