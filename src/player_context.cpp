@@ -14,4 +14,6 @@ void PlayerContext::reset()
   mLives = 3;
   mShotCount = 0;
   mRelaunchTimer = 0;
+  mAliens.clear();
+  mShields.clear();
 }
