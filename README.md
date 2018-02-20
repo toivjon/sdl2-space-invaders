@@ -3,6 +3,8 @@ A SDL2 implementation of the classic Space Invaders game.
 
 This implementation supports one and two players.
 
+Development blog entry: https://toivjon.wordpress.com/2017/10/22/sdl2-space-invaders/ 
+
 ## Scenes
 Game is split into following scenes:
 1. A welcome scene, which contains the main menu and score descriptions.
