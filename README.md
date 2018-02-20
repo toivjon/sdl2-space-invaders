@@ -50,7 +50,7 @@ Required tools and libraries for the compilation:
 1. [CMake](https://cmake.org/) (ver. >=3.7.2)
 2. [SDL2](https://www.libsdl.org/download-2.0.php) (ver. >=2.0.5)
 3. [SDL2_ttf](https://www.libsdl.org/projects/SDL_ttf/) (ver. >=2.0.14)
-4. [SDL2_image] (https://www.libsdl.org/projects/SDL_image/) (ver. >= 2.0.2)
+4. [SDL2_image](https://www.libsdl.org/projects/SDL_image/) (ver. >= 2.0.2)
 5. A compilation toolkit supported by the CMake utility (e.g. Visual Studio).
 
 CMake compilation uses Find*-modules from the /cmake folder which specify where CMake looks for the required libraries.
